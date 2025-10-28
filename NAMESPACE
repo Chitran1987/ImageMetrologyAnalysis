@@ -1,2 +1,2 @@
-useDynLib(ImageMetrologyAnalysis, .registration = TRUE)
+useDynLib(ImageMetrologyAnalysis, .registration = FALSE)
 exportPattern("^[[:alpha:]]+")
