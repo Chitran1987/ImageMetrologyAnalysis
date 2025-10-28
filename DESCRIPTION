@@ -1,11 +1,11 @@
 Package: ImageMetrologyAnalysis
 Type: Package
-Title: What the Package Does (Title Case)
+Title: High-Performance Numerical Routines for Microscopic/Metrological Image ANanlysis
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Chitran", "Ghosal",
+      email = "ghosal.chitran@gmail.com",
       role = c("aut", "cre")
     )
   )

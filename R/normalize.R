@@ -1,3 +1,18 @@
+#' Normalizes/Recalibrates a matrix between 0 and 1
+#'
+#' This function takes in a matrix and outputs a linearly recalibrated matrix where the minimum value is recalibrated to 0 and the max value is reclaibrated to 1
+#'
+#' @param M Numeric matrix that you want to normalize.
+#'
+#' @return A numeric matrix of the same dimension as \code{M}.
+#'
+#'#' @author
+#' Chitran Ghosal <ghosal.chitran@gmail.com>
+#'
+#' @examples
+#' M = matrix(seq(1,10), nrow=2)
+#' normalize(M)
+#' @export
 normalize <- function(M){
   if(!is.matrix(M)){
     stop('Input argument is expected to be a matrix')
