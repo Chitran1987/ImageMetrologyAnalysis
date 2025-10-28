@@ -9,8 +9,10 @@ Authors@R: c(
       role = c("aut", "cre")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
+Description: Provides high-performance numerical routines with R and Fortran backends
+    for the analysis of microscopic and metrological images. Includes tools for
+    image preprocessing, FFT-based filtering, quantitative surface statistics,
+    and data visualization to support advanced metrology and materials research.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
