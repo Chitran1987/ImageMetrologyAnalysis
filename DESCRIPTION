@@ -16,3 +16,4 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/Chitran1987/ImageMetrologyAnalysis
 BugReports: https://github.com/Chitran1987/ImageMetrologyAnalysis/issues
+RoxygenNote: 7.3.3
