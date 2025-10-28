@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/Chitran1987/ImageMetrologyAnalysis/actions)](https://github.com/Chitran1987/ImageMetrologyAnalysis/actions)
 <!-- badges: end -->
 
 The goal of ImageMetrologyAnalysis is to …
