@@ -1,6 +1,14 @@
+# --- Fortran sources to compile ---
 OBJECTS = linalg_solver.o fortran_utils.o
+
+# --- Compiler & linker flags ---
+PKG_FCFLAGS = $(FCFLAGS)
 PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
-# Explicit rule ensures the shared object gets built
+# --- Explicit shared-object build rule (ensures .so is created) ---
 $(SHLIB): $(OBJECTS)
 	$(SHLIB_LINK) $(SHLIB_LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
+
+# --- Optional cleanup rule (used by R CMD CLEAN) ---
+clean:
+	rm -f $(OBJECTS) $(SHLIB)
