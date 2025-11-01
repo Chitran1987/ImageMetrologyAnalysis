@@ -1,5 +1,6 @@
 module fortran_utils
 use iso_fortran_env, only: real64
+use linalg_solver
 implicit none
 public
 private :: rev_cmplx, rev_real, rev_int
