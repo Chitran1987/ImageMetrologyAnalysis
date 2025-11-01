@@ -1,6 +1,2 @@
-PKG_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS) $(FLIBS)
-
 OBJECTS = linalg_solver.o fortran_utils.o
-
-# Ensure build order
-fortran_utils.o: linalg_solver.o
+PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
