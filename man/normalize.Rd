@@ -13,7 +13,7 @@ normalize(M)
 A numeric matrix of the same dimension as \code{M}.
 
 #' @author
-Chitran Ghosal <ghosal.chitran@gmail.com>
+Chitran Ghosal \href{mailto:ghosal.chitran@gmail.com}{ghosal.chitran@gmail.com}
 }
 \description{
 This function takes in a matrix and outputs a linearly recalibrated matrix where the minimum value is recalibrated to 0 and the max value is reclaibrated to 1

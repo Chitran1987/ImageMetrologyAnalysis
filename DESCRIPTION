@@ -1,6 +1,6 @@
 Package: ImageMetrologyAnalysis
 Type: Package
-Title: High-Performance Numerical Routines for Microscopic/Metrological Image ANanlysis
+Title: High-Performance Numerical Routines for Microscopic/Metrological Image Analysis
 Version: 0.1.0
 Authors@R: c(
     person(
@@ -19,3 +19,4 @@ LazyData: true
 URL: https://github.com/Chitran1987/ImageMetrologyAnalysis
 BugReports: https://github.com/Chitran1987/ImageMetrologyAnalysis/issues
 RoxygenNote: 7.3.3
+Roxygen: list(markdown = TRUE)
