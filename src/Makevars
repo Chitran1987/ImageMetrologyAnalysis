@@ -1,8 +1,6 @@
 PKG_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS) $(FLIBS)
 
-## Ensure the module is compiled before users of it
 OBJECTS = linalg_solver.o fortran_utils.o
 
-## (optional but robust) state the .mod dependency explicitly
-fortran_utils.o: linalg_solver.mod
-vec_utils.o:     linalg_solver.mod
+# Ensure build order
+fortran_utils.o: linalg_solver.o
