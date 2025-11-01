@@ -19,6 +19,8 @@ Chitran Ghosal <ghosal.chitran@gmail.com>
 This function takes in a matrix and outputs a linearly recalibrated matrix where the minimum value is recalibrated to 0 and the max value is reclaibrated to 1
 }
 \examples{
-M = matrix(seq(1,10), nrow=2)
-normalize(M)
+M <- matrix(seq(1,10), nrow=2)
+M
+N <- normalize(M)
+N
 }

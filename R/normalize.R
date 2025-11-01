@@ -10,8 +10,10 @@
 #' Chitran Ghosal <ghosal.chitran@gmail.com>
 #'
 #' @examples
-#' M = matrix(seq(1,10), nrow=2)
-#' normalize(M)
+#' M <- matrix(seq(1,10), nrow=2)
+#' M
+#' N <- normalize(M)
+#' N
 #' @export
 normalize <- function(M){
   if(!is.matrix(M)){
