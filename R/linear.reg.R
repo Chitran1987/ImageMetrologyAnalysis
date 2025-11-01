@@ -10,7 +10,7 @@ linear.reg <- function(df){
     stop('df should have more than two rows or points')
   }
   df <- as.matrix(df)
-  if(!as.numeric(df)){
+  if(!is.numeric(df)){
     stop('df should be of type numeric')
   }
   storage.mode(df) <- "double"
