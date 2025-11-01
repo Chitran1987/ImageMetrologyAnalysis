@@ -1,2 +1,6 @@
 OBJECTS = linalg_solver.o fortran_utils.o
 PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+
+# Explicit rule ensures the shared object gets built
+$(SHLIB): $(OBJECTS)
+	$(SHLIB_LINK) $(SHLIB_LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
