@@ -1,71 +1,62 @@
 #' Estimates the co-efficients of the fitting line/plane/hyper-plane using linear regression
 #'
-#' @description This function takes in a non-singular square matrix and a vector of the same length as the no. of rows of the matrix \\cr
-#' The no. of conditions/equations are equal to the no. of rows of matrix \code{A}
+#' @description This function takes in a dataframe and returns the value of the coefficients of the regression
 #'
+#'@usage linear.reg(df)
 #'
-#' @param A Numeric matrix for the system of linear equations
-#' @param b Numeric Vector having length equal to no. of equations
+#' @param df Numeric dataframe needed for the regression analysis
 #'
 #' @details
-#' Solves the matrix equation as shown below. \cr
-#' \deqn{ [A] [X] = [b]; \quad \implies \text{returns} \,\, [X] = [A]^{-1}[b]}
-#' For example, the equations shown below
-#' \deqn{
-#' x + y = 3 \\\\
-#' x - y = 1
+#' The dataframe argument \code{df} should have \eqn{m} rows/observations/points and \eqn{n} columns.\cr
+#' The first \eqn{n-1} columns are treated as the first \eqn{n-1} independent variables or \eqn{X}'s\cr
+#' The last/\eqn{n}th column is the independent variable \eqn{Y}\cr
+#' Hence the dataframe should be built as shown below\cr
+#' \code{df = data.frame(X1, X2, X3, ... , Xn-1, Y)} where \code{Xk, Y} are vectors of equal length\cr
+#' The fit model is assumed to be as shown below
+#' \deqn{\displaystyle\hat{Y} = C_1 X_1 + C_2 X_2 + C_3 X_3 + \dots + C_{n-1}X_{n-1} + C_n + \epsilon \\\\
+#' \implies \hat{Y} = \sum_{k=1}^{n-1}C_k X_k + C_n + \epsilon
 #' }
-#' Can be arranged as shown
-#' \deqn{
+#' Ofcourse, for a valid regression \eqn{m > n}\cr
+#' When \eqn{m = n}, the problem reduces to a system of linear equations\cr
+#' For solving a system of linear equations, please see \link{solve_sym_auto}\cr
+#' The coefficients \eqn{C_1, C_2, \dots C_n} are returned in a vector format\cr
+#' The methodology used is related to Ordinary Least Squares or OLS regression. Please see [StatsChitran::OLS.reg()]\cr
+#'
+#'
+#'
+#'
+#'
+#' @return A numeric vector of length \eqn{n} containing the coefficients \eqn{C_1} through \eqn{C_n}.\cr
+#' The return vector is arranged as shown below
+#' \deqn{\displaystyle
+#' C =
 #' \begin{pmatrix}
-#' 1 & 1 \\
-#' 1 & -1
-#' \end{pmatrix}\cdot
-#' \begin{pmatrix}
-#' x \\
-#' y
-#' \end{pmatrix} =
-#' \begin{pmatrix}
-#' 3\\
-#' 1
+#' C_1\\
+#' C_2\\
+#' C_3\\
+#' \cdot\\
+#' \cdot\\
+#' \cdot\\
+#' C_{n-1}\\
+#' C_n
 #' \end{pmatrix}
 #' }
-#' Where \eqn{[A]} and \eqn{[b]} are represented as shown below
-#' \deqn{
-#' [A] =
-#' \begin{pmatrix}
-#' 1 & 1\\
-#' 1 & -1
-#' \end{pmatrix}
-#' \quad [b] =
-#' \begin{pmatrix}
-#' 3\\
-#' 1
-#' \end{pmatrix}
-#' }
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#' @return A numeric vector of the same length as \eqn{[b]}.
 #'
 #' @author
 #' Chitran Ghosal <ghosal.chitran@gmail.com>
 #'
 #' @examples
-#' A <- matrix(data = c(1,1,1, -1), nrow = 2, byrow = T)
-#' b <- c(3,1)
-#' solve_sym_auto(A,b)
+#' #Call the relevant libraries
+#' library(ImageMetrologyAnalysis)
+#' #Build the noisy dataset
+#' X1 <- seq(-10, 10, by = 10^-5)
+#' X2 <- X1^2
+#' Y <- 3*X1 + 4*X2 + 9 + rnorm(n=length(X1), mean = 0, sd=1000) #add noise
+#' dat <- data.frame(X1, X2, Y)
+#' #Call the linear.reg() function
+#' C <- linear.reg(dat)
+#' #Check the co-efficients
+#' C
 #'
 #' @export
 linear.reg <- function(df){
