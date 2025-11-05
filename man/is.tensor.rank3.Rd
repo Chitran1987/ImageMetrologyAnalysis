@@ -31,7 +31,7 @@ The following checks are run by the program
 library(StatsChitran)
 dat <- system.file("extdata", "STM.png", package = "StatsChitran")
 tens <- img_2_arr(source.png = dat, x.lim = c(0, 6.115*10^-9), y.lim = c(0, 6.115*10^-9))
-is.tens.rank3(tens)
+is.tensor.rank3(tens)
 
 
 }
