@@ -66,7 +66,7 @@
 #' #Build the noisy polynomial dataset
 #' X <- seq(-10, 10, by = 10^-5)
 #' Y <- 3*X^2 + 4*X + 7
-#' Y <- Y + rnorm(n=length(X), mean = 0, sd = 1000) #add noise
+#' Y <- Y + rnorm(n=length(X), mean = 0, sd = 10) #add noise
 #' #The X^2 and the X can be treated as X1 and X2 here respectively
 #' #regression of the polynomial co-efficients is in hindsight, a problem in linear regression
 #' X1 <- X^2
