@@ -64,7 +64,7 @@ C
 #Call the relevant libraries
 library(StatsChitran)
 #Build the noisy polynomial dataset
-X <- seq(-10, 10, by = 10^-5)
+X <- seq(-10, 10, by = 10^-3)
 Y <- 3*X^2 + 4*X + 7
 Y <- Y + rnorm(n=length(X), mean = 0, sd = 5) #add noise
 #The X^2 and the X can be treated as X1 and X2 here respectively
