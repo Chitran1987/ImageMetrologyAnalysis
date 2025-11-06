@@ -58,11 +58,27 @@
 #' @export
 lin.bg.sub.1D <- function(dat, win, min.zero){
   ##error checking
-  #
-  #
-  #
-  #
+  if(!is.data.frame(dat) || !is.data.frame(win)){
+    stop('Both arguments dat and win need to be dataframes')
+  }
+  if(dim(dat)[2] != 2 || dim(win)[2] != 2){
+    stop('Both arguments dat and win need to be two-column dataframes')
+  }
+  if(!is.numeric(as.matrix(dat)) || !is.numeric(as.matrix(win))){
+    stop('Both arguments dat and win should be numeric matrices')
+  }
   #ensure that min.zero is a boolean
+  if(!missing(min.zero)){
+    if(!is.logical(min.zero)){
+      stop('argument min.zero should be a boolean bit')
+    }
+    if(length(min.zero) != 1){
+      stop('argument min.zero should be a single boolean bit')
+    }
+
+  }else{
+    min.zero = T
+  }
   #
   #
   #error checking
