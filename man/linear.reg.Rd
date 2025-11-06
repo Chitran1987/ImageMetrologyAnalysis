@@ -46,6 +46,8 @@ The coefficients \eqn{C_1, C_2, \dots C_n} are returned in a vector format\cr
 The methodology used is related to Ordinary Least Squares or OLS regression. Please see \code{\link[StatsChitran:OLS.reg]{StatsChitran::OLS.reg()}}\cr
 }
 \examples{
+
+####First example
 #Call the relevant libraries
 library(ImageMetrologyAnalysis)
 #Build the noisy dataset
@@ -57,6 +59,28 @@ dat <- data.frame(X1, X2, Y)
 C <- linear.reg(dat)
 #Check the co-efficients
 C
+
+####Second example
+#Call the relevant libraries
+library(StatsChitran)
+#Build the noisy polynomial dataset
+X <- seq(-10, 10, by = 10^-5)
+Y <- 3*X^2 + 4*X + 7
+Y <- Y + rnorm(n=length(X), mean = 0, sd = 1000) #add noise
+#The X^2 and the X can be treated as X1 and X2 here respectively
+#regression of the polynomial co-efficients is in hindsight, a problem in linear regression
+X1 <- X^2
+df <- data.frame(X1, X, Y)
+#Call the linear.reg() function
+C <- linear.reg(df)
+#plot the solution
+plot(X, Y)
+Y.pred <- C[1]*X1 + C[2]*X + C[3]
+lines(X, Y.pred, col='red')
+
+
+
+
 
 }
 \author{
