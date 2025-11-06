@@ -249,7 +249,7 @@ function lin_bg_sub_1D(dat, win, min_zero) result(ret_mat)
     new_dat(:,1) = X
     new_dat(:,2) = Y
     !get the regression co-efficients
-    lin_reg(dat=new_dat, p = size(new_dat, 1), q = 2, Coeff = coeff)
+    call lin_reg(dat=new_dat, p = size(new_dat, 1), q = 2, Coeff = coeff)
     !Input the original matrix to the result
     ret_mat = dat
     ret_mat(:,2) = ret_mat(:,2) - (coeff(1)*ret_mat(:,1) + coeff(2))
