@@ -74,7 +74,7 @@ df <- data.frame(X1, X, Y)
 #Call the linear.reg() function
 C <- linear.reg(df)
 #plot the solution
-plot(X, Y)
+plot(X, Y, col = rgb(0, 0, 0.25, 0.25), pch=19)
 Y.pred <- C[1]*X1 + C[2]*X + C[3]
 lines(X, Y.pred, col='red')
 
