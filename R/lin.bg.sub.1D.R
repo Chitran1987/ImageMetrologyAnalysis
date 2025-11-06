@@ -5,7 +5,7 @@ lin.bg.sub.1D <- function(dat, win, min.zero){
   #
   #
   #
-  #ensure that min.zero is an integer
+  #ensure that min.zero is a boolean
   #
   #
   #error checking
