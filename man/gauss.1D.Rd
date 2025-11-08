@@ -45,8 +45,8 @@ Y1 <- gauss.1D(X)
 Y2 <- gauss.1D(X, mu = 0, sig = 1.5)
 Y3 <- gauss.1D(X, mu = 0, sig = 2.0)
 plot(X, Y1, type='l', col = 'black')
-plot(X, Y2, type='l', col = 'blue')
-plot(X, Y3, type = 'l', col = 'red')
+lines(X, Y2, col = 'blue')
+lines(X, Y3, col = 'red')
 
 
 }
