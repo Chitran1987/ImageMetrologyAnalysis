@@ -19,6 +19,12 @@ subroutine lin_bg_sub_1D_c(dat, dat_m, dat_n, win, win_m, win_n, res, min_zero) 
   res = lin_bg_sub_1D(dat, win, min_zero1)
 end subroutine lin_bg_sub_1D_c
 
+subroutine gauss_1D_c(x, x_len, y, A, x0, sig) bind(C, name="gauss_1D_c")
+  integer :: x_len
+  real(real64) :: x(x_len), y(x_len)
+  real(real64) :: A, x0, sig
+  y = gauss_1D(x, A, x0, sig)
+end subroutine gauss_1D_c
 
 
 end module fortran_expose
