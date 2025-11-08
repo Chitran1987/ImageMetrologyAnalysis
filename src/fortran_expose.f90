@@ -26,5 +26,12 @@ subroutine gauss_1D_c(x, x_len, y, A, x0, sig) bind(C, name="gauss_1D_c")
   y = gauss_1D(x, A, x0, sig)
 end subroutine gauss_1D_c
 
+subroutine gauss_2D_nocorr_c(X, Y, x_len, y_len, Ax, Ay, x0, y0, sig_x, sig_y, tens) bind(C, name='gauss_2D_nocorr_c')
+  integer :: x_len, y_len
+  real(real64), intent(in) :: X(x_len), Y(y_len), Ax, Ay, x0, y0, sig_x, sig_y !The main inputs
+  !real(real64) :: Ax, Ay, x0, y0, sig_x, sig_y !The optional inputs
+  real(real64) :: tens(y_len, x_len, 3) !The output
+  tens = gauss_2D_nocorr(X, Y, Ax, Ay, x0, y0, sig_x, sig_y)
+end subroutine gauss_2D_nocorr_c
 
 end module fortran_expose
