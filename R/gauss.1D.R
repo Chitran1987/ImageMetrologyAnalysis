@@ -6,7 +6,7 @@ gauss.1D <- function(X, A, mu, sig){
     sig <- 1
   }
   if(missing(A)){
-    mu <- 1/(\sqrt(2*pi)*sig)
+    mu <- 1/(sqrt(2*pi)*sig)
   }
   x_len <- length(X)
 
