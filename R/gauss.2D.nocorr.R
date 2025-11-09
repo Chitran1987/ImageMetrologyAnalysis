@@ -34,7 +34,7 @@ gauss.2D.nocorr <- function(X, Y, A.x, A.y, mu.x, mu.y, sig.x, sig.y){
   storage.mode(x_len) <- 'integer'
   storage.mode(y_len) <- 'integer'
   storage.mode(tens) <- 'double'
-  gauss_2D_nocorr_c(X, Y, x_len, y_len, Ax, Ay, x0, y0, sig_x, sig_y, tens)
+  #gauss_2D_nocorr_c(X, Y, x_len, y_len, Ax, Ay, x0, y0, sig_x, sig_y, tens)
   res <- .C('gauss_2D_nocorr_c', X=X, Y=Y, x_len=x_len, y_len=y_len, Ax=A.x, Ay=A.y, x0=mu.x, y0=mu.y, sig_x=sig.x, sig_y=sig.y, tens=tens)
   return(res$tens)
 
