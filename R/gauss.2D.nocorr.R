@@ -51,9 +51,9 @@
 #' #Build the X and Y gaussians
 #' X <- seq(-8, 10, by=0.01)
 #' Y <- seq(-5, 10, by=0.01)
-#' tens <- gauss.2D.nocorr(X, Y, mu.x = 1.0, mu.y = 5.0, sig.x = 2.3)
-#' tens1 <- gauss.2D.nocorr(X, Y, sig.y = 1.5)
-#' tens[,,1] <- tens[,,1] + tens1[,,1]
+#' tens <- gauss.2D.nocorr(X, Y, mu.x = 1.0, mu.y = 5.0, sig.x = 2.3) #Gaussian centered at (1,5)
+#' tens1 <- gauss.2D.nocorr(X, Y, sig.y = 1.5) #Gaussian centered at (0,0) default
+#' tens[,,1] <- tens[,,1] + tens1[,,1] #Add the two gaussians
 #'
 #' #Plot the array
 #' plot2D.arr(tens)
