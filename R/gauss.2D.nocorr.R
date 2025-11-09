@@ -1,4 +1,4 @@
-gauss.2D.nocorr(X, Y, A.x, A.y, mu.x, mu.y, sig.x, sig.y){
+gauss.2D.nocorr <- function(X, Y, A.x, A.y, mu.x, mu.y, sig.x, sig.y){
   if(missing(mu.x)){
     mu.x <- 0
   }
