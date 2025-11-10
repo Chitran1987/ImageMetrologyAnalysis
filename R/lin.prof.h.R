@@ -9,7 +9,7 @@ lin.prof.h <- function(tens, h.val, pl=T){
   if(!is.logical(pl) || length(pl)!= 1){
     stop('pl should be a boolean bit')
   }
-  if( h.val<min(tens(,1,3)) || h.val>max(tens(,1,3)) ){
+  if( h.val<min(tens[,1,3]) || h.val>max(tens[,1,3]) ){
     stop('h.val is not within the range of Y-values of the tens tensor')
   }
   res_mat <- matrix(data = 0.0, nrow = dim(tens)[2], ncol = 2)
