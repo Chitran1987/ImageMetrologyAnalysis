@@ -1,3 +1,46 @@
+#' Extract vertical line profiles from \eqn{T_{m,n,p=3}} type tensors
+#'
+#' @description Extracts vertical line profiles from a Tensor of the type \eqn{\large T_{m,n,p=3}}\cr
+#' For more information about \eqn{\large T_{m,n,p=3}} type tensors, look up \link{StatsChitran::img_2_arr}
+#'
+#'@usage lin.prof.v(tens, v.val, T)
+#'lin.prof.v(tens, v.val)
+#'
+#' @param tens The type \eqn{\large T_{m,n,p=3}} tensor from which the line profile is expected \cr
+#'
+#' @param v.val The value at which the expected line profile is to be extracted
+#'
+#' @param pl A boolean bit which when set to \code{TRUE} ensures that the tensor is plotted using \link{StatsChitran::plt.2D.arr}\cr
+#'  Defaults to \code{TRUE}
+#'
+#'
+#' @return A Two column dataframe whose no. of rows are equal to \eqn{m}
+#'  * The first column are the distance values
+#'  * The second column are the height/magnitude values
+#'
+#' @author
+#' Chitran Ghosal <ghosal.chitran@gmail.com>
+#'
+#' @examples
+#' rm(list=ls())
+#' library(StatsChitran)
+#' library(ImageMetrologyAnalysis)
+#' X <- seq(-10, 10, by = 0.05)
+#' Y <- seq(-10, 10, by=0.05)
+#' # Create two tensors
+#' G_tens <- gauss.2D.nocorr(X, Y, mu.x = 3.5, mu.y = 2.5, sig.x = 1.7, sig.y = 2.3) #1st tensors
+#' G1_tens <- gauss.2D.nocorr(X,Y) #2nd tensor
+#' G_tens[,,1] <- G_tens[,,1]+G1_tens[,,1] #Add the two tensors
+#' plot2D.arr(G_tens) #Plot the tensor
+#'
+#' #Call the lin.prof.v() function
+#' df <- lin.prof.v(G_tens, v.val = 1.5)
+#'
+#' #Plot the extracted line profile
+#' plot(df$dist, df$magnitude, type = 'l')
+#'
+#'
+#' @export
 lin.prof.v <- function(tens, v.val, pl=T){
   library(StatsChitran)
   if(!is.tensor.rank3(tens)){

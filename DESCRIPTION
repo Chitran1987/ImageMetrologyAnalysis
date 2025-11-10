@@ -18,7 +18,6 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/Chitran1987/ImageMetrologyAnalysis
 BugReports: https://github.com/Chitran1987/ImageMetrologyAnalysis/issues
-
 Imports:
     Rcpp,
     fftwtools,
@@ -26,17 +25,13 @@ Imports:
     stats,
     graphics,
     StatsChitran
-
 Remotes:
     Chitran1987/StatsChitran
-
 LinkingTo:
     Rcpp
-
 Suggests:
     testthat,
     knitr,
     rmarkdown
-
 RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
