@@ -38,7 +38,7 @@ subroutine lin_prof_h_c(T, m, n, p, h_val, res) bind(C, name="lin_prof_h_c")
   integer :: m, n, p !Input sizes
   real(real64) :: T(m, n, p), h_val !Input arguments
   real(real64) :: res(size(T, 2), 2) !The "output" arguments
-  res = lin_prof_h(M = T, h_val = h_val)
+  res = lin_prof_h(T, h_val)
 end subroutine lin_prof_h_c
 
 subroutine lin_prof_v_c(T, m, n, p, v_val, res) bind(C, name="lin_prof_v_c")
