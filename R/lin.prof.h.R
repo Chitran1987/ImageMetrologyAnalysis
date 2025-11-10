@@ -28,7 +28,7 @@ lin.prof.h <- function(tens, h.val, pl=T){
     v_dummy <- tens[,1,3] #The vector to figure out which value h.val is closest to
     v_dummy <- abs(v_dummy - h.val)
     ind <- which.min(v_dummy)
-    tens[ind,,1] <- max(tens[,,1])
+    tens[ind,,1] <- 1.2*max(tens[,,1])
     plot2D.arr(tens)
   }
   return(res_df)
