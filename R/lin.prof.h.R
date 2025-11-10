@@ -2,7 +2,7 @@ lin.prof.h <- function(tens, h.val){
   if(!is.tensor.rank3(tens)){
     stop('agument tens has to be of type tensor.rank3')
   }
-  if( !is.numeric(h.val) || length(tens) != 1 ){
+  if( !is.numeric(h.val) || length(h.val) != 1 ){
     stop('h.val should be a numeric scalar')
   }
   storage.mode(tens) <- 'double'
