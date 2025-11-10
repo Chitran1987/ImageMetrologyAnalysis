@@ -11,9 +11,12 @@ lin.prof.h <- function(tens, h.val){
   storage.mode(h.val) <- 'double'
   storage.mode(res_mat) <- 'double'
   storage.mode(v) <- 'integer'
-  res <- .C("lin_prof_h_c", tens, v[1], v[2], v[3], h.val, res_mat)
+  m <- v[1]
+  n <- v[2]
+  p <- v[3]
+  res <- .C("lin_prof_h_c", Tens = tens, m=m, n=n, p=p, h_val=h.val, res=res_mat)
   #res <- as.data.frame(res$res.mat)
   #names(res) <- c('dist', 'magnitude')
-  return(res[[6]])
+  return(res$res_mat)
 
 }
