@@ -10,7 +10,7 @@ lin.prof.h <- function(tens, h.val){
   res.mat <- matrix(data = 0, nrow = dim(tens)[2], ncol = 2)
   res <- .C("lin_prof_h_c", tens, dim(tens)[1], dim(tens)[2], dim(tens)[3], h.val, res.mat)
   res <- as.data.frame(res$res.mat)
-  names(res) = c('dist', 'magnitude')
+  #names(res) <- c('dist', 'magnitude')
   return(res)
 
 }
