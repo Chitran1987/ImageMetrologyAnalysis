@@ -41,11 +41,11 @@ subroutine lin_prof_h_c(Tens, m, n, p, h_val, res) bind(C, name="lin_prof_h_c")
   res = lin_prof_h(Tens, h_val)
 end subroutine lin_prof_h_c
 
-subroutine lin_prof_v_c(T, m, n, p, v_val, res) bind(C, name="lin_prof_v_c")
+subroutine lin_prof_v_c(Tens, m, n, p, v_val, res) bind(C, name="lin_prof_v_c")
   integer :: m, n, p !Input sizes
-  real(real64) :: T(m,n,p), v_val !Input arguments
-  real(real64) :: res(size(T, 1), 2) !The output arguments
-  res = lin_prof_v(M = T, v_val = v_val)
+  real(real64) :: Tens(m,n,p), v_val !Input arguments
+  real(real64) :: res(size(Tens, 1), 2) !The output arguments
+  res = lin_prof_v(M = Tens, v_val = v_val)
 end subroutine lin_prof_v_c
 
 
