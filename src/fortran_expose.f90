@@ -34,4 +34,19 @@ subroutine gauss_2D_nocorr_c(X, Y, x_len, y_len, Ax, Ay, x0, y0, sig_x, sig_y, t
   tens = gauss_2D_nocorr(X, Y, Ax, Ay, x0, y0, sig_x, sig_y)
 end subroutine gauss_2D_nocorr_c
 
+subroutine lin_prof_h_c(T, m, n, p, h_val, res) bind(C, name="lin_prof_h_c")
+  integer :: m, n, p !Input sizes
+  real(real64) :: T(m, n, p), h_val !Input arguments
+  real(real64) :: res(size(T, 2), 2) !The "output" arguments
+  res = lin_prof_h(M = T, h_val = h_val)
+end subroutine lin_prof_h_c
+
+subroutine lin_prof_v_c(T, m, n, p, v_val, res) bind(C, name="lin_prof_v_c")
+  integer :: m, n, p !Input sizes
+  real(real64) :: T(m,n,p), v_val !Input arguments
+  real(real64) :: res(size(T, 1), 2) !The output arguments
+  res = lin_prof_v(M = T, v_val = v_val)
+end subroutine lin_prof_v_c
+
+
 end module fortran_expose
