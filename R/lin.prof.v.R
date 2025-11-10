@@ -14,7 +14,7 @@
 #'  Defaults to \code{TRUE}
 #'
 #'
-#' @return A Two column dataframe whose no. of rows are equal to \eqn{m}
+#' @return A Two column dataframe whose no. of rows are equal to \eqn{\large m}
 #'  * The first column are the distance values
 #'  * The second column are the height/magnitude values
 #'
