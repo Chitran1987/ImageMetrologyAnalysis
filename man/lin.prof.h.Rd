@@ -39,7 +39,7 @@ G_tens[,,1] <- G_tens[,,1]+G1_tens[,,1] #Add the two tensors
 plot2D.arr(G_tens) #Plot the tensor
 
 #Call the lin.prof.h() function
-df <- lin.prof.h(G_tens, h.val = 3.5)
+df <- lin.prof.h(G_tens, h.val = 1.9)
 
 #Plot the extracted line profile
 plot(df$dist, df$magnitude, type = 'l')
