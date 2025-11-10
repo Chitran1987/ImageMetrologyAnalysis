@@ -15,8 +15,8 @@ lin.prof.h <- function(tens, h.val){
   n <- v[2]
   p <- v[3]
   res <- .C("lin_prof_h_c", Tens = tens, m=m, n=n, p=p, h_val=h.val, res=res_mat)
-  #res <- as.data.frame(res$res.mat)
-  #names(res) <- c('dist', 'magnitude')
-  return(res$res)
+  res_df <- as.data.frame(res$res)
+  names(res_df) <- c('dist', 'magnitude')
+  return(res_df)
 
 }
