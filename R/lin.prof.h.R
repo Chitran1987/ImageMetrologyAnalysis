@@ -25,10 +25,10 @@ lin.prof.h <- function(tens, h.val, pl=T){
   res_df <- as.data.frame(res$res)
   names(res_df) <- c('dist', 'magnitude')
   if(pl){
-    v_dummy <- tens(,1,3) #The vector to figure out which value h.val is closest to
+    v_dummy <- tens[,1,3] #The vector to figure out which value h.val is closest to
     v_dummy <- abs(v_dummy - h.val)
     ind <- which.min(v_dummy)
-    tens(ind,,1) <- 1.0
+    tens[ind,,1] <- 1.0
     plot2D.arr(tens)
   }
   return(res_df)
