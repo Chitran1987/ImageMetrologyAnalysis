@@ -14,6 +14,6 @@ lin.prof.h <- function(tens, h.val){
   res <- .C("lin_prof_h_c", tens, v[1], v[2], v[3], h.val, res_mat)
   #res <- as.data.frame(res$res.mat)
   #names(res) <- c('dist', 'magnitude')
-  return(res$res_mat)
+  return(res[[6]])
 
 }
