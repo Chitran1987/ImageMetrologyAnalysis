@@ -48,5 +48,4 @@ subroutine lin_prof_v_c(Tens, m, n, p, v_val, res) bind(C, name="lin_prof_v_c")
   res = lin_prof_v(M = Tens, v_val = v_val)
 end subroutine lin_prof_v_c
 
-
 end module fortran_expose
