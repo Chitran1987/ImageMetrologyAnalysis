@@ -51,8 +51,14 @@ end subroutine lin_prof_v_c
 subroutine integrate_c(X, Y, m, xmin, xmax, Riemann, int_val) bind(C, name="integrate_c")
   integer :: m !X, Y sizes
   real(real64) :: X(m), Y(m), xmin, xmax, int_val
-  logical :: Riemann
-  int_val = integrate(X, Y, xmin, xmax, Riemann )
+  logical :: Riemann1
+  integer :: Riemann
+  if (Riemann == 0) then
+    Riemann1 = .false.
+  else
+    Riemann1 = .true.
+  end if
+  int_val = integrate(X, Y, xmin, xmax, Riemann1 )
 end subroutine integrate_c
 
 subroutine integrate_function_c(X, Y, m, y0, dat) bind(C, name="integrate_function_c")
