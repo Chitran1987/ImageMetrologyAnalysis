@@ -59,6 +59,6 @@ subroutine integrate_function_c(X, Y, m, y0, dat) bind(C, name="integrate_functi
   integer :: m
   real(real64) :: X(m), Y(m), dat(m,2), y0
   dat = integrate_function(X, Y, y0)
-end subroutine integrate_function
+end subroutine integrate_function_c
 
 end module fortran_expose
