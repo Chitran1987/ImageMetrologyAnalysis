@@ -48,4 +48,17 @@ subroutine lin_prof_v_c(Tens, m, n, p, v_val, res) bind(C, name="lin_prof_v_c")
   res = lin_prof_v(M = Tens, v_val = v_val)
 end subroutine lin_prof_v_c
 
+subroutine integrate_c(X, Y, m, xmin, xmax, Riemann, int_val) bind(C, name="integrate_c")
+  integer :: m !X, Y sizes
+  real(real64) :: X(m), Y(m), xmin, xmax, int_val
+  logical :: Riemann
+  int_val = integrate(X, Y, xmin, xmax, Riemann )
+end subroutine integrate_c
+
+subroutine integrate_function_c(X, Y, m, y0, dat) bind(C, name="integrate_function_c")
+  integer :: m
+  real(real64) :: X(m), Y(m), dat(m,2), y0
+  dat = integrate_function(X, Y, y0)
+end subroutine integrate_function
+
 end module fortran_expose
