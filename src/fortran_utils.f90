@@ -424,5 +424,23 @@ function integrate(X, Y, xmin, xmax, Riemann)
 
 end function integrate
 
+!integrates a function to return a function
+function integrate_function(X, Y, y0) result(dat)
+    real(real64) :: X(:), Y(:) !Inputs
+    real(real64) :: dat(size(X),2) !Output
+    real(real64), optional :: y0
+    real(real64) :: y0_new
+    integer :: m
+    integer :: i
+    m = size(X)
+    !allocate(Y(m))
+    !allocate(dat(m,2))
+    dat(:,1) = X
+    do i = 1, m
+        dat(i,2) = integrate(X=X, Y=Y, xmin=X(1), xmax=X(i), riemann = .false.)
+    end do
+    dat(:,2) = dat(:,2) + y0
+end function integrate_function
+
 end module fortran_utils
 
