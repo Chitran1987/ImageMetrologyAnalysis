@@ -26,7 +26,8 @@ The function provides the closest analogue of the deinite integral shown below
 \deqn{\large\displaystyle S = \int_{x_0}^{x_1}f(x)\,\mathrm{d}x}
 }
 \details{
-For additional details between a Trapezoidal approximation and a Riemann summation, see also \link{StatsChitran::num_integrate}, \link{StatsChitran::num.integrate.riemann}. \cr
+For additional details between a Trapezoidal approximation and a Riemann summation, see also \link[StatsChitran:num_integrate]{\code{num_integrate()}}
+, \link[StatsChitran:num.integrate.riemann]{\code{num.integrate.riemann()}}.\cr
 For very dense vectors, \eqn{\large \bar{X}} and \eqn{\large \bar{Y}},  a Riemann integral approaches a Trapezoidal in precision estimates.
 }
 \examples{
