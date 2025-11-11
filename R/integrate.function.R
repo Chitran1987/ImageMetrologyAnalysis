@@ -1,5 +1,5 @@
 integrate.function <- function(X, Y, y0){
-  if(!is.numeric(X) || !is.numeric(Y) || is.numeric(y0)){
+  if(!is.numeric(X) || !is.numeric(Y) || !is.numeric(y0)){
     stop('X, Y and y0 have all got to be of type numeric')
   }
   if(length(X) != length(Y)){
