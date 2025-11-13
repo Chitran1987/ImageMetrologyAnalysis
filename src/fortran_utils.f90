@@ -82,7 +82,7 @@ end function var
 function sdev(X) result(res)
     real(real64), intent(in), dimension(:) :: X
     real(real64) :: res, res1
-    call var(X, res1)
+    resl = var(X)
     res = sqrt(res1)
 end function sdev
 
