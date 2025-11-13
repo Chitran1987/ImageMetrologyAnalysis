@@ -13,7 +13,7 @@ Description: Provides high-performance numerical routines with R and Fortran bac
     for the analysis of microscopic and metrological images. Includes tools for
     image preprocessing, FFT-based filtering, quantitative surface statistics,
     and data visualization to support advanced metrology and materials research.
-License: MIT + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/Chitran1987/ImageMetrologyAnalysis
