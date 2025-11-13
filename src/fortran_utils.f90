@@ -444,6 +444,7 @@ function integrate_function(X, Y, y0) result(dat)
     dat(:,2) = dat(:,2) + y0
 end function integrate_function
 
+!Creates a 2-slice X-Y tensor grid, given X and Y vectors
 function grid_2(X, Y) result(tens)
     real(real64) :: X(:), Y(:) !Inputs
     real(real64) :: tens(size(Y), size(X), 2) !Outputs - Tensor size
