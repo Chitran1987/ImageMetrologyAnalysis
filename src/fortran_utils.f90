@@ -68,7 +68,7 @@ function var(X) result(res)
     real(real64) :: dmp = 0
     integer :: i
     real(real64) :: a
-    call mean(X, a)
+    a =  mean(X)
     do i = 1, size(X)
     dmp = dmp + (X(i) - a)**2
     end do
