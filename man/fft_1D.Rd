@@ -29,18 +29,14 @@ Calculates the frequency vector, \eqn{\large \omega_k} using the sampling of the
 Here, \eqn{ \large \omega_0 \leq \omega_k \leq \omega_s} where \eqn{\large \omega_0} and \eqn{\large \omega_s} are the base and the sampling frequencies.\cr
 }
 \examples{
-#Call the relevant libraries
-library(StatsChitran)
+rm(list=ls())
 library(ImageMetrologyAnalysis)
-
-#build the dataset
-X <- seq(-10, 10, 0.1)
-Y1 <- gauss.1D(X)
-Y2 <- gauss.1D(X, mu = 0, sig = 1.5)
-Y3 <- gauss.1D(X, mu = 0, sig = 2.0)
-plot(X, Y1, type='l', col = 'black')
-lines(X, Y2, col = 'blue')
-lines(X, Y3, col = 'red')
+X <- seq(-10, 10, by=0.001)
+Y <- sin(20*X)
+plot(X, Y)
+df <- fft_1D(X, Y)
+plot(df$freq, df$Ampl, type = 'b', xlim = c(-30, 30))
+abline(v=c(-20, 20), col='red')
 
 
 }

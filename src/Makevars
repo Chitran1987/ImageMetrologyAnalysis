@@ -1,0 +1,17 @@
+# --- Fortran sources to compile ---
+OBJECTS = linalg_solver.o fortran_utils.o fft_utils.o fortran_expose.o
+
+# --- Compiler & linker flags ---
+# FFTW_CFLAGS will be substituted by configure (e.g. -I/usr/local/include)
+PKG_FCFLAGS = $(FCFLAGS) 
+
+# FFTW_LIBS will be substituted by configure (e.g. -L/usr/local/lib -lfftw3)
+PKG_LIBS = -lfftw3 $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+
+# --- Explicit shared-object build rule (ensures .so is created) ---
+$(SHLIB): $(OBJECTS)
+	$(SHLIB_LINK) $(SHLIB_LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
+
+# --- Optional cleanup rule (used by R CMD CLEAN) ---
+clean:
+	rm -f $(OBJECTS) $(SHLIB)
