@@ -3,7 +3,7 @@ OBJECTS = linalg_solver.o fortran_utils.o fft_utils.o fortran_expose.o
 
 # --- Compiler & linker flags ---
 PKG_FCFLAGS = $(FCFLAGS)
-PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+PKG_LIBS = -lfftw3 $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
 # --- Explicit shared-object build rule (ensures .so is created) ---
 $(SHLIB): $(OBJECTS)
