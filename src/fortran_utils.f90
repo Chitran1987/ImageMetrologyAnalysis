@@ -444,5 +444,16 @@ function integrate_function(X, Y, y0) result(dat)
     dat(:,2) = dat(:,2) + y0
 end function integrate_function
 
+function grid_2(X, Y) result(tens)
+    real(real64) :: X(:), Y(:) !Inputs
+    real(real64) :: tens(size(Y), size(X), 2) !Outputs - Tensor size
+    integer :: m, n
+    m = size(X)
+    n = size(Y)
+    tens(:,:,1) = spread(X, 1, n)
+    call rev(Y)
+    tens(:,:,2) = spread(Y, 2, m)
+end function grid_2
+
 end module fortran_utils
 
