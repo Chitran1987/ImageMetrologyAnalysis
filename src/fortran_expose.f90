@@ -1,6 +1,7 @@
 module fortran_expose
 use iso_fortran_env, only: real64
 use fortran_utils
+use fft_utils
 implicit none
 public
 
