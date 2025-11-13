@@ -1,5 +1,5 @@
 # --- Fortran sources to compile ---
-OBJECTS = linalg_solver.o fortran_utils.o fortran_expose.o
+OBJECTS = linalg_solver.o fortran_utils.o fft_utils.o fortran_expose.o
 
 # --- Compiler & linker flags ---
 PKG_FCFLAGS = $(FCFLAGS)
