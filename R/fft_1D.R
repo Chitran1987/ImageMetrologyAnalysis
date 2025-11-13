@@ -13,8 +13,8 @@ fft_1D <- function(X, Y){
   storage.mode(res) <- "double"
   storage.mode(m) <- "integer"
 
-  ret_var <- .C("fft_1D_c" X = X, Y = Y, m = m, res = res)
+  ret_var <- .C("fft_1D_c", X = X, Y = Y, m = m, res = res)
   ret_var <- ret_var$res
-  df <- data.frame( freq = ret_var[,1,1] , Ampl = [,2,1] , phase = [,2,2])
+  df <- data.frame( freq = ret_var[,1,1] , Ampl = ret_var[,2,1] , phase = ret_var[,2,2])
   return(df)
 }
