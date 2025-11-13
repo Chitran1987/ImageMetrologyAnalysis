@@ -68,4 +68,10 @@ subroutine integrate_function_c(X, Y, m, y0, dat) bind(C, name="integrate_functi
   dat = integrate_function(X, Y, y0)
 end subroutine integrate_function_c
 
+subroutine fft_1D_c(X, Y, m, res) bind(C, name="fft_1D_c")
+  integer :: m
+  real(real64) :: X(m), Y(m), res(m+1, 2, 2)
+  res = fft_1D(X, Y)
+end subroutine fft_1D_c
+
 end module fortran_expose
