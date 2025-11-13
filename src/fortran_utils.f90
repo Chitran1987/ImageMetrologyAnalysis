@@ -45,24 +45,24 @@ subroutine seqn(st, en, len, X)
 end subroutine seqn
 
 !function calculates the difference of subsequent nos in a vector
-subroutine diff(X, Y)
+function diff(X) result(Y)
     real(real64), dimension(:), intent(in)::X
     real(real64) :: Y(size(X)-1)
     integer :: i
     do i = 1, size(Y)
     Y(i) = X(i+1) - X(i)
     end do
-end subroutine diff
+end function diff
 
 !function calculates the mean of a vector
-subroutine mean(X, y)
+function mean(X) result(Y)
     real(real64), intent(in), dimension(:) :: X
     real(real64) :: y
     y = sum(X)/size(X)
-end subroutine mean
+end function mean
 
 !function calculates the var of a vector
-subroutine var(X, res)
+function var(X) result(res)
     real(real64), intent(in), dimension(:) :: X
     real(real64) :: res
     real(real64) :: dmp = 0
@@ -76,18 +76,18 @@ subroutine var(X, res)
     !print *, size(X)-1
     res = dmp/(size(X)-1)
     dmp = 0
-end subroutine var
+end function var
 
 !function calculates the sdev of a vector
-subroutine sdev(X, res)
+function sdev(X) result(res)
     real(real64), intent(in), dimension(:) :: X
     real(real64) :: res, res1
     call var(X, res1)
     res = sqrt(res1)
-end subroutine sdev
+end function sdev
 
 !function averages between successive elements of vector
-subroutine mdpnt_vec(X, res)
+function mdpnt_vec(X) result(res)
     real(real64), intent(in), dimension(:) :: X
     real(real64) :: res(size(X)-1)
     integer :: i, n
@@ -95,7 +95,7 @@ subroutine mdpnt_vec(X, res)
     do i = 1, n-1
     res(i) = (X(i) + X(i+1))/2
     end do
-end subroutine mdpnt_vec
+end function mdpnt_vec
 
 !subroutine for reversing a real vector
 subroutine rev_real(X)
