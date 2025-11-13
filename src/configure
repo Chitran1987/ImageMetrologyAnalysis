@@ -1,0 +1,38 @@
+#!/bin/sh
+
+echo "checking for FFTW3..."
+
+# Allow user override via environment
+if [ -n "$FFTW_LIBS" ] || [ -n "$FFTW_CFLAGS" ]; then
+  echo "  using FFTW3 from environment:"
+  echo "    FFTW_LIBS   = ${FFTW_LIBS:-"(not set)"}"
+  echo "    FFTW_CFLAGS = ${FFTW_CFLAGS:-"(not set)"}"
+else
+  # Need pkg-config for auto-detection
+  if command -v pkg-config >/dev/null 2>&1; then
+    if pkg-config --exists fftw3 ; then
+      FFTW_LIBS=`pkg-config --libs fftw3`
+      FFTW_CFLAGS=`pkg-config --cflags fftw3`
+      echo "  found FFTW3 via pkg-config:"
+      echo "    FFTW_LIBS   = $FFTW_LIBS"
+      echo "    FFTW_CFLAGS = $FFTW_CFLAGS"
+    else
+      echo "ERROR: FFTW3 library not found by pkg-config."
+      echo "       Install FFTW3 dev package, e.g.:"
+      echo "         - Debian/Ubuntu: sudo apt install libfftw3-dev"
+      echo "         - Fedora/RHEL : sudo dnf install fftw-devel"
+      echo "         - macOS (brew): brew install fftw"
+      exit 1
+    fi
+  else
+    echo "ERROR: pkg-config not found and FFTW_LIBS/FFTW_CFLAGS not set."
+    echo "       Install pkg-config and FFTW3, or set FFTW_LIBS/FFTW_CFLAGS"
+    echo "       before running R CMD INSTALL."
+    exit 1
+  fi
+fi
+
+# Substitute placeholders in src/Makevars.in -> src/Makevars
+sed -e "s|@FFTW_LIBS@|$FFTW_LIBS|g" \
+    -e "s|@FFTW_CFLAGS@|$FFTW_CFLAGS|g" \
+    src/Makevars.in > src/Makevars
