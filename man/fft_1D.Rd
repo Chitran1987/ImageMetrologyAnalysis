@@ -23,7 +23,7 @@ The returned value is always a Three column dataframe .\cr
 The function takes in vectors \eqn{\bar{X}} and \eqn{\bar{Y}} and returns the Fourier Transfrom of the data
 }
 \details{
-Solves for the DFT, \eqn{\large X_k}, using Fortran's Fast FFTW3 backend \link{FFTW3}\url{https://www.fftw.org/}. \cr
+Solves for the DFT, \eqn{\large X_k}, using Fortran's Fast FFTW3 backend \url{https://www.fftw.org/}. \cr
 \deqn{\displaystyle \large X_k = \sum_{n=0}^{N-1}x_n e^{-2\pi i k n/N}}
 Calculates the frequency vector, \eqn{\large \omega_k} using the sampling of the \eqn{\large \bar{X}} variable.\cr
 Here, \eqn{ \large \omega_0 \leq \omega_k \leq \omega_s} where \eqn{\large \omega_0} and \eqn{\large \omega_s} are the base and the sampling frequencies.\cr
