@@ -32,8 +32,8 @@ fft_2D <- function(tens, pl = 'none'){
   #Call the fft_2D_c function
   fortran.res.list <- .C('fft_2D_c', Tens = tens, m = m, n = n, p = p, Transform = ret.tens, wm = wm, wn = wn, wp = wp )
   #Define a list for return
-  amp.tens <- fortran.res.list$Transform(,,c(1,3,4))
-  phase.tens <- fortran.res.list$Transform(,,c(2,3,4))
+  amp.tens <- fortran.res.list$Transform[,,c(1,3,4)]
+  phase.tens <- fortran.res.list$Transform[,,c(2,3,4)]
   ret.list <- vector(mode='list', length = 2)
   ret.list[[1]] <- amp.tens
   ret.list[[2]] <- phase.tens
