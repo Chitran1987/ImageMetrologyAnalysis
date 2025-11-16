@@ -80,4 +80,10 @@ subroutine fft_2D_c(Tens, m, n, p, Transform, wm, wn, wp) bind(C, name='fft_2D_c
   Transform = fft_2D(Tens)
 end subroutine fft_2D_c
 
+subroutine grid_2_c(X, Y, mx, my, tens) bind(C, name = 'grid_2_c')
+  integer :: mx, my
+  real(real64) :: X(mx), Y(my) !Inputs
+  real(real64) :: tens(my, mx, 2) !Outputs - Tensor size
+  tens = grid_2(X, Y)
+end subroutine
 end module fortran_expose
