@@ -9,7 +9,14 @@ grid_2 <- function(X, Y){
   #Introduce the arguments for grid_2_c subroutine
   m.x <- length(X)
   m.y <- length(Y)
-  tens <- array(dim = c(m.y, m.x,2))
+  tens <- array(data = 0.0, dim = c(m.y, m.x,2))
+  #storage mode for arguments
+  storage.mode(X) <- "double"
+  storage.mode(Y) <- "double"
+  storage.mode(tens) <- "double"
+  storage.mode(m.x) <- "integer"
+  storage.mode(m.y) <- "integer"
+  #Call the function
   res <- .C('grid_2_c', X = X, Y = Y, mx = m.x, my = m.y, tens = tens)
   return(res$tens)
 }
