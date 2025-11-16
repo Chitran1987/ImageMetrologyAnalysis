@@ -1,4 +1,4 @@
-fft_2D <- funcion(tens, pl = 'none'){
+fft_2D <- function(tens, pl = 'none'){
   ###Call the relevant libraries
   library(StatsChitran)
   ###Error handling
