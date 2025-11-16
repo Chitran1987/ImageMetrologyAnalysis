@@ -47,7 +47,7 @@ fft_2D <- function(tens, pl = 'none'){
     return(ret.list)
   }
   if(pl == 'phase'){
-    plot2D.arr(ret.list$phase.tens)
+    plot2D.arr(ret.list[[2]])
     return(ret.list)
   }
 
