@@ -43,7 +43,7 @@ fft_2D <- function(tens, pl = 'none'){
     return(ret.list)
   }
   if(pl == 'amp'){
-    plot2D.arr(ret.list$amp.tens)
+    plot2D.arr(ret.list[[1]])
     return(ret.list)
   }
   if(pl == 'phase'){
