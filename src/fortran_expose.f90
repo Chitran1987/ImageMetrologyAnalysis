@@ -85,5 +85,18 @@ subroutine grid_2_c(X, Y, mx, my, tens) bind(C, name = 'grid_2_c')
   real(real64) :: X(mx), Y(my) !Inputs
   real(real64) :: tens(my, mx, 2) !Outputs - Tensor size
   tens = grid_2(X, Y)
-end subroutine
+end subroutine grid_2_c
+
+subroutine square_latt_sb_c(X, Y, mx, my, R_latt, A, sig, tens) bind(C, name = 'square_latt_sb_c')
+  integer :: mx, my
+  real(real64) :: X(mx), Y(my), tens(my, mx,3), R_latt, A, sig
+  tens = square_latt_sb(X, Y, R_latt, A, sig)
+end subroutine square_latt_sb_c
+
+subroutine rect_latt_sb_c(X, Y, mx, my, R_latt_x, R_latt_y, A, sig, tens) bind(C, name = 'rect_latt_sb_c')
+  integer :: mx, my
+  real(real64) :: X(mx), Y(my), tens(my, mx,3), R_latt_x, R_latt_y, A, sig
+  tens = rect_latt_sb(X, Y, R_latt_x, R_latt_y, A, sig)
+end subroutine rect_latt_sb_c
+
 end module fortran_expose
