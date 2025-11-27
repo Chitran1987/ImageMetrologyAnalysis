@@ -46,6 +46,8 @@ func2D <- function(f, X, Y){
   if(length(formals(f)) != 2){
     stop('Argument f neds to be a function with exactly two arguments')
   }
+  #Check the names of the arguments
+  args <- names(formals(f))
   if(!identical(args, c("X", "Y"))){
     stop('f needs to be a function whose arguments are exactly called "X" and "Y" ')
   }
