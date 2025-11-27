@@ -51,10 +51,10 @@ func2D <- function(f, X, Y){
   if(!identical(args, c("X", "Y"))){
     stop('f needs to be a function whose arguments are exactly called "X" and "Y" ')
   }
-  if( !is.numeric(X) || (length(dim(X)) != 1) ){
+  if( !is.numeric(X) ){
     stop('X needs to be a numeric vector')
   }
-  if( !is.numeric(Y) || (length(dim(Y)) != 1)){
+  if( !is.numeric(Y) ){
     stop('Y needs to be a numeric vector')
   }
   ###eroor checking####################################
