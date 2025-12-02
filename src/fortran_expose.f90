@@ -74,10 +74,10 @@ subroutine fft_1D_c(X, Y, m, res) bind(C, name="fft_1D_c")
   res = fft_1D(X, Y)
 end subroutine fft_1D_c
 
-subroutine fft_2D_c(Tens, m, n, p, Transform, wm, wn, wp) bind(C, name='fft_2D_c')
+subroutine fft_2D_c(Tens, m, n, p, Transform, wm, wn, wp, sampling_del) bind(C, name='fft_2D_c')
   integer m, n, p, wm, wn, wp
-  real(real64) :: Tens(m,n,p), Transform(wm, wn, wp)
-  Transform = fft_2D(Tens)
+  real(real64) :: Tens(m,n,p), Transform(wm, wn, wp), sampling_del
+  Transform = fft_2D(Tens, sampling_del)
 end subroutine fft_2D_c
 
 subroutine grid_2_c(X, Y, mx, my, tens) bind(C, name = 'grid_2_c')

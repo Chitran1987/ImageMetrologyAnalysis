@@ -1,4 +1,4 @@
-fft_2D <- function(tens, pl = 'none'){
+fft_2D <- function(tens, sampling.del = 0.1, pl = 'none'){
   ###Call the relevant libraries
   library(StatsChitran)
   ###Error handling
@@ -23,6 +23,7 @@ fft_2D <- function(tens, pl = 'none'){
   #Define and abstract the storage modes
   storage.mode(tens) <- 'double'
   storage.mode(ret.tens) <- 'double'
+  storage.mode(sampling.del) <- 'double'
   storage.mode(m) <- 'integer'
   storage.mode(n) <- 'integer'
   storage.mode(p) <- 'integer'
@@ -30,7 +31,7 @@ fft_2D <- function(tens, pl = 'none'){
   storage.mode(wn) <- 'integer'
   storage.mode(wp) <- 'integer'
   #Call the fft_2D_c function
-  fortran.res.list <- .C('fft_2D_c', Tens = tens, m = m, n = n, p = p, Transform = ret.tens, wm = wm, wn = wn, wp = wp )
+  fortran.res.list <- .C('fft_2D_c', Tens = tens, m = m, n = n, p = p, Transform = ret.tens, wm = wm, wn = wn, wp = wp, sampling_del = sampling.del )
   #Define a list for return
   amp.tens <- fortran.res.list$Transform[,,c(1,3,4)]
   phase.tens <- fortran.res.list$Transform[,,c(2,3,4)]
