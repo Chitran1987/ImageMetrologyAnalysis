@@ -45,7 +45,7 @@ subroutine seqn(st, en, len, X)
 end subroutine seqn
 
 !function produces a sequence with start, length and increment
-function seqn(st, len, del) result(out)
+function seqn1(st, len, del) result(out)
     real(real64) :: st, del
     integer :: len
     real(real64) :: out(len)
@@ -53,7 +53,7 @@ function seqn(st, len, del) result(out)
     do i = 1, len
         out(i) = st + (i-1)*del
     end do
-end function seqn
+end function seqn1
 
 !function calculates the difference of subsequent nos in a vector
 function diff(X) result(Y)
@@ -588,7 +588,7 @@ function zero_pad_tens(tens) result(res_tens)
         allocate(res_tens(m,m,3))
         allocate(X_new(m))
         tens_Y = spread(Y, 2, m)
-        X_new = seqn(st = X(1), len = m, del = del_X)
+        X_new = seqn1(st = X(1), len = m, del = del_X)
         tens_X = spread(X_new, 1, m)
         tens_dat(:,1:n) = tens(:,:,1)
         tens_dat(:,(n+1):m) = 0.0_real64
@@ -606,7 +606,7 @@ function zero_pad_tens(tens) result(res_tens)
         allocate(res_tens(n,n,3))
         allocate(Y_new(n))
         tens_X = spread(X, 1, n)
-        Y_new = seqn(st = Y(1), len = n, del = del_Y) !Check this line !Maybe Y_new needs Y to be reversed
+        Y_new = seqn1(st = Y(1), len = n, del = del_Y) !Check this line !Maybe Y_new needs Y to be reversed
         tens_Y = spread(Y_new, 2, n)
         tens_dat(1:m,:) = tens(:,:,1)
         tens_dat((m+1):n,:) = 0.0_real64
