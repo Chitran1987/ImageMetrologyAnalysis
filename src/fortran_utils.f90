@@ -44,6 +44,17 @@ subroutine seqn(st, en, len, X)
     end do
 end subroutine seqn
 
+!function produces a sequence with start, length and increment
+function seqn(st, len, del) result(out)
+    real(real64) :: st, del
+    integer :: len
+    real(real64) :: out(len)
+    integer :: i
+    do i = 1, len
+        out(i) = st + (i-1)*del
+    end do
+end function seqn
+
 !function calculates the difference of subsequent nos in a vector
 function diff(X) result(Y)
     real(real64), dimension(:), intent(in)::X
