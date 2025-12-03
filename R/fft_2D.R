@@ -12,8 +12,13 @@ fft_2D <- function(tens, sampling.del = 0.1, pl = 'none'){
   }
 
   #Define the return Tensor and the other arguments
-  ret.tens <- rep(0.0, dim(tens)[1]*dim(tens)[2]*4)
-  ret.tens <- array(data = ret.tens, dim = c(dim(tens)[1], dim(tens)[2], 4))
+  if(dim(tens)[1] >= dim(tens)[2]){
+    new.dim <- dim(tens)[1]
+  }else{
+    new.dim <- dim(tens)[2]
+  }
+  ret.tens <- rep(0.0, new.dim*new.dim*4)
+  ret.tens <- array(data = ret.tens, dim = c(new.dim, new.dim, 4))
   m <- dim(tens)[1]
   n <- dim(tens)[2]
   p <- dim(tens)[3]
