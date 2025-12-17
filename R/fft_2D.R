@@ -65,6 +65,20 @@ fft_2D <- function(tens, sampling.del = 0.1, pl = 'none'){
   if( pl!='none' && pl!='amp' && pl!='phase'){
     stop("The pl argument should either be a string equalling 'amp', 'phase' or 'none'")
   }
+  #is sampling.del a numeric scalar
+  if(!is.numeric(sampling.del) || length(sampling.del)!=1){
+    stop('sampling.del needs to be a numeric scalar')
+  }
+  #are the sampling rates the same in both directions
+  Xsp = tens[,,2]
+  Ysp = tens[,,3]
+  X = Xsp[1,]
+  Y = Ysp[,1]
+  delX = mean(diff(X))
+  delY = mean(diff(Y))
+  if( abs(abs(delX) - abs(delY))/min(c(abs(delY), abs(delX))) > sampling.del){
+    stop('sampling frequencies along X and Y need to be the same')
+  }
 
   #Define the return Tensor and the other arguments
   if(dim(tens)[1] >= dim(tens)[2]){
