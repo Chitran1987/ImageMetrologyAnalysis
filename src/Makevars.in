@@ -3,10 +3,10 @@ OBJECTS = linalg_solver.o fortran_utils.o fft_utils.o fortran_expose.o
 
 # --- Compiler & linker flags ---
 # FFTW_CFLAGS will be substituted by configure (e.g. -I/usr/local/include)
-PKG_FCFLAGS = $(FCFLAGS) @FFTW_CFLAGS@
+PKG_FCFLAGS = $(FCFLAGS) @FFTW_CFLAGS@ -fopenmp
 
 # FFTW_LIBS will be substituted by configure (e.g. -L/usr/local/lib -lfftw3)
-PKG_LIBS = @FFTW_LIBS@ $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+PKG_LIBS = @FFTW_LIBS@ $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS) -fopenmp
 
 # --- Explicit shared-object build rule (ensures .so is created) ---
 $(SHLIB): $(OBJECTS)
