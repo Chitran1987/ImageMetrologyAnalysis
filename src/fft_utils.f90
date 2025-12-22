@@ -268,4 +268,83 @@ contains
         return
     end function fft_2D
 
+    function fft_2D_map(img_tens, Xspan, Yspan, k1st, k0 ) result(res_tens)
+        use omp_lib
+
+        real(real64) :: img_tens(:,:,:) !The image tensor on which the fft_2D_map() will be applied
+        real(real64) :: Xspan, Yspan !The Xspan and the Yspan of the image that is needed to be subsetted
+        !real(real64) :: k1st(:,:) !A structure of size k1st(:,4) where each row regards to a specific
+        real(real64) :: k0(4) !The integration square around the (0,0) spot. Only kx_span and ky_span are needed
+        real(real64) :: res_tens(size(img_tens,1), size(img_tens,2), size(img_tens,3))  !The res_tens showing the resulting tensor
+
+        !--------------------Input argument k1st(n_spots,4)-------------------------------------------------------------!
+        !!  The k1st(n_spots, 4) argument
+        !!  n_spots = no. of first order/higher order spots around which integration is needed
+        !!  each row has 4 column.
+        !!  (1st column, 2nd coulmn) = (x,y) of bottom left corner of square
+        !!  (3rd column, 4th coulmn) = (x,y) of top right corner of square
+        real(real64) :: k1st(:,:) !A structure of size k1st(n_spots,4) where each row regards to a specific
+        !--------------------Input argument k1st(n_spots,4)-------------------------------------------------------------!
+
+        !--------------------Internal variables-------------------------------------------------------------------------!
+        integer :: m, n !Lateral sizes of img_tens
+        integer :: n_spots !The no. of spots over which to integrate
+        integer :: p !Integrnal dummy
+        integer :: i,j !Internal dummy
+        real(real64) :: kx_lim(2), ky_lim(2) !The actual co-ordinates of the kx and ky over which to integrate for the higher order spots
+        real(real64) :: k0x_lim(2), k0y_lim(2) !The actual co-ordinates of the kx and ky over which to integrate for the 0th order spots
+        real(real64), allocatable :: tmp_img(:,:,:) !The temporary masked image zoomed into for each iteration
+        real(real64), allocatable :: fft_tmp(:,:,:) !The fft of the temporary image created
+        real(real64) :: center(2) !The center for the tmp_img created on each iteration
+        logical, allocatable :: mask_recip_1st_ord_spots(:,:) !The mask for the reciprocal lattice for the first order spots
+        logical, allocatable :: mask_recip_center(:,:) !The mask for the (0,0) spot
+        real(real64) :: dmp_sum, dmp_sum_zero !The integrated values
+        !--------------------Internal variables-------------------------------------------------------------------------!
+
+        !!Transfer the X and Y matrixes to the result
+        res_tens(:,:,2) = img_tens(:,:,2) !The X matrix transfer
+        res_tens(:,:,3) = img_tens(:,:,3) !The Y matrix transfer
+
+        !!Lateral sizes of the tensor img_tens
+        m = size(img_tens, 1)
+        n = size(img_tens, 2)
+
+        !!No of spots to integrate over
+        n_spots = size(k1st, 1)
+
+        !!Now for the actual code
+        k0x_lim = [k0(1), k0(3)]
+        k0y_lim = [k0(2), k0(4)]
+
+        !$omp parallel do collapse(2) default(none) &
+        !$omp shared(img_tens, res_tens, m, n, n_spots, Xspan, Yspan, k1st, k0x_lim, k0y_lim) &
+        !$omp private(i, j, p, center, tmp_img, fft_tmp, dmp_sum, dmp_sum_zero, kx_lim, ky_lim, mask_recip_1st_ord_spots, mask_recip_center)
+        do j = 1, n, 1
+            do i = 1, m, 1
+                center = [img_tens(i,j,2), img_tens(i,j,3)]
+                !tmp_img = mask_tens_cent(tens=img_tens, cent=center, Xspan=Xspan, Yspan=Yspan) !The tmp_img has been created
+                tmp_img = window_sigmoid(tens=img_tens, cent=center, k = 10.0_real64, Xspan = Xspan, Yspan = Yspan)
+                fft_tmp = fft_2D(tens = tmp_img, sampling_del = 0.1_real64) !The fft_tmp has been created
+                !--------------Integration jobs over the fft_tmp image---------------------------------------------------!
+                !--------Integrate over the 1st/higher order spots----------------!
+                dmp_sum = 0.0_real64
+                do p = 1, n_spots, 1
+                    !!!!!Start the integrate2D_process
+                    kx_lim = [k1st(p,1), k1st(p,3)]
+                    ky_lim = [k1st(p,2), k1st(p,4)]
+                    mask_recip_1st_ord_spots = ( (fft_tmp(:,:,3) >= kx_lim(1)) .and. (fft_tmp(:,:,3) <= kx_lim(2)) ) .and. ( (fft_tmp(:,:,4) >= ky_lim(1)) .and. (fft_tmp(:,:,4) <= ky_lim(2)) )
+                    dmp_sum = dmp_sum + sum(fft_tmp(:,:,1), mask_recip_1st_ord_spots)
+                end do
+                !--------Integrate over the 1st/higher order spots----------------!
+                !--------Integrate over the zero order spots----------------!
+                mask_recip_center = ( (fft_tmp(:,:,3) >= k0x_lim(1)) .and. (fft_tmp(:,:,3) <= k0x_lim(2)) ) .and. ( (fft_tmp(:,:,4) >= k0y_lim(1)) .and. (fft_tmp(:,:,4) <= k0y_lim(2)) )
+                dmp_sum_zero = sum(fft_tmp(:,:,1), mask_recip_center)             !--------Integrate over the zero order spots----------------!
+                !--------------Integration jobs over the fft_tmp image---------------------------------------------------!
+                res_tens(i,j,1) = dmp_sum/(dmp_sum_zero+10**(-5))
+            end do
+        end do
+        !$omp end parallel do
+
+    end function fft_2D_map
+
 end module fft_utils
