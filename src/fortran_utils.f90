@@ -653,6 +653,40 @@ function mask_tens_cent(tens, cent, Xspan, Yspan) result(res_tens)
     res_tens = mask_tens(tens=tens, xlim=x_lim, ylim=y_lim)
     return
 end function mask_tens_cent
+
+!The one sided sigmoid function
+pure elemental real(real64) function sigmoid(x, k, cutoff) result(y)
+    real(real64), intent(in) :: x, k, cutoff !Input variables vector X, sharpness k, cutoff/fermi_level
+    y = 1/(1 + exp(-k*(x-cutoff)))
+    return
+end function sigmoid
+
+!The two sided sigmoid function or the sigmoid plateau function sigmoid_plat()
+pure elemental real(real64) function sigmoid_plat(x, k, left_cut, right_cut) result(y)
+    real(real64), intent(in) :: x, k, left_cut, right_cut
+    Y = sigmoid(x=x, k=k, cutoff=left_cut) - sigmoid(x=x, k=k, cutoff=right_cut)
+    return
+end function sigmoid_plat
+
+!function sigmoid_2D
+pure elemental real(real64) function sigmoid_2D(x, y, k, x_lo, x_hi, y_lo, y_hi) result(z)
+    real(real64), intent(in) :: x, y, k, x_lo, x_hi, y_lo, y_hi
+    z = ( sigmoid_plat(x=x, k=k, left_cut=x_lo, right_cut=x_hi) )*( sigmoid_plat(x=y, k=k, left_cut=y_lo, right_cut=y_hi) )
+    return
+end function sigmoid_2D
+
+!window_sigmoid()
+function window_sigmoid(tens, cent, k, Xspan, Yspan) result(res_tens)
+    real(real64) :: tens(:,:,:), cent(2)
+    real(real64) :: res_tens(size(tens, 1), size(tens, 2), 3)
+    real(real64) :: k, Xspan, Yspan
+    real(real64) :: offset_X, offset_Y !Internal variable
+    offset_X = Xspan/10.0_real64
+    res_tens(:,:,2:3) = tens(:,:,2:3)
+    res_tens(:,:,1) = sigmoid_2D(x=res_tens(:,:,2), y= res_tens(:,:,3), k=k, x_lo = cent(1)-Xspan/2.0_real64+offset_X, x_hi = cent(1)+Xspan/2.0_real64-offset_X, y_lo = cent(2)-Yspan/2.0_real64+offset_Y, y_hi = cent(2)+Yspan/2.0_real64-offset_Y)
+    res_tens(:,:,1) = res_tens(:,:,1)*tens(:,:,1)
+    return
+end function window_sigmoid
 !Define a hexagonal lattice
 
 !Define a honeycomb lattice
