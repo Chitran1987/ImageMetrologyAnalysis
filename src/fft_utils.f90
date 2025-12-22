@@ -122,6 +122,10 @@ contains
         !!   G(:,:,3) = ω_x coordinates  (same shape as data)
         !!   G(:,:,4) = ω_y coordinates  (same shape as data)
 
+        use, intrinsic :: iso_c_binding
+        use iso_fortran_env, only: real64
+        use omp_lib
+
         real(real64), intent(in) :: tens(:,:,:), sampling_del
         real(real64) :: G(size(tens,1), size(tens,2), 4)
 
@@ -177,12 +181,11 @@ contains
         ! -------------------------------------------------------
         ! Error checking in comparison to sampling rate
         ! -------------------------------------------------------
-         if ( abs(abs(del_x) - abs(del_y))/min(abs(del_x), abs(del_y)) > sampling_del ) error stop 'sampling rates for X and Y differ by more than sampling_del'
+        if ( abs(abs(del_x) - abs(del_y)) / min(abs(del_x), abs(del_y)) > sampling_del ) &
+            error stop 'sampling rates for X and Y differ by more than sampling_del'
 
         omega_sx = two_pi / del_x
         omega_sy = two_pi / del_y
-
-
 
         domega_x = omega_sx / real(n, real64)  ! bin width in ω_x
         domega_y = omega_sy / real(m, real64)  ! bin width in ω_y
@@ -196,10 +199,19 @@ contains
         ! 3) 2D FFT (complex-to-complex) using FFTW
         !    Result Fy_c is in the standard (0..m-1, 0..n-1)
         !    "uncentered" ordering.
+        !
+        !    NOTE: FFTW planning is NOT thread-safe.
+        !    We therefore serialize plan creation/destruction.
         ! -----------------------------------------------------
+        !$omp critical(fftw_planner)
         plan = fftw_plan_dft_2d(m, n, z_c, Fy_c, FFTW_FORWARD, FFTW_ESTIMATE)
+        !$omp end critical(fftw_planner)
+
         call fftw_execute_dft(plan, z_c, Fy_c)
+
+        !$omp critical(fftw_planner)
         call fftw_destroy_plan(plan)
+        !$omp end critical(fftw_planner)
 
         ! -----------------------------------------------------
         ! 4) Center the spectrum (2D fftshift)
