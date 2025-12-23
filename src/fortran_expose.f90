@@ -99,4 +99,14 @@ subroutine rect_latt_sb_c(X, Y, mx, my, R_latt_x, R_latt_y, A, sig, tens) bind(C
   tens = rect_latt_sb(X, Y, R_latt_x, R_latt_y, A, sig)
 end subroutine rect_latt_sb_c
 
+subroutine fft_2D_map_c(img_tens, m, n, res_tens, Xspan, Yspan, k1st, n_spots, k0) bind(C, name = 'fft_2D_map_c')
+  integer :: m, n, n_spots
+  real(real64) :: img_tens(m, n, 3)
+  real(real64) :: res_tens(m, n, 3)
+  real(real64) :: Xspan, Yspan
+  real(real64) :: k1st(n_spots, 4)
+  real(real64) :: k0(4)
+  res_tens = fft_2D_map(img_tens = img_tens, Xspan=Xspan, Yspan=Yspan, k1st=k1st, k0=k0)
+end subroutine fft_2D_map_c
+
 end module fortran_expose
