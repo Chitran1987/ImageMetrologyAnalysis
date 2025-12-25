@@ -25,7 +25,7 @@ fft_2D_map <- function(img.tens, DelX, DelY, k1st, k0, pl=T){
   storage.mode(k1st) <- 'double'
   storage.mode(n_spots) <- 'integer'
   storage.mode(k0) <- 'double'
-  'Call the fft_2D_map() function'
+  #'Call the fft_2D_map() function'
   fortran.res.list <- .C('fft_2D_map_c', img_tens = img.tens, m = m, n=n, res_tens = ret.tens , Xspan=DelX, Yspan=DelY, k1st=k1st, k0=k0)
   ret.val <- fortran.res.list$res_tens
   if(pl){
