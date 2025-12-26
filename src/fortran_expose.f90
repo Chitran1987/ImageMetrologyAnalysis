@@ -123,4 +123,10 @@ subroutine sigmoid_c(X, m, Y, k, cut) bind(C, name='sigmoid_c')
   Y = sigmoid(x=X, k=k, cutoff=cut)
 end subroutine sigmoid_c
 
+subroutine sigmoid_plat_c(X, m, Y, k, left_cut, right_cut) bind(C, name = 'sigmoid_plat_c')
+  integer :: m
+  real(real64) :: X(m), Y(m), k, left_cut, right_cut
+  Y = sigmoid_plat(x = X, k = k, left_cut = left_cut, right_cut = right_cut)
+end subroutine sigmoid_plat_c
+
 end module fortran_expose
