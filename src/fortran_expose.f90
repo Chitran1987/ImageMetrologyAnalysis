@@ -131,8 +131,10 @@ end subroutine sigmoid_plat_c
 
 subroutine sigmoid_2D_c(X, m, Y, n, Z, k, x_left, y_left, x_right, y_right) bind(C, name = 'sigmoid_2D_c')
   integer :: m, n
-  real(real64) :: X(m), Y(n), Z(m, n), k, x_left, y_left, x_right, y_right
-  Z = sigmoid_2D(x = X, y = Y, k = k, x_lo = x_left, x_hi = x_right, y_lo = y_left, y_hi = y_right)
+  real(real64) :: X(m), Y(n), Z(n, m), k, x_left, y_left, x_right, y_right
+  real(real64) :: XY(n,m,2) !The XY grid
+  XY = grid(X=X, Y=Y)
+  Z = sigmoid_2D(x = XY(:,:,1), y = XY(:,:,2), k = k, x_lo = x_left, x_hi = x_right, y_lo = y_left, y_hi = y_right)
 end subroutine sigmoid_2D_c
 
 
