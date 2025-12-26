@@ -1,4 +1,4 @@
-plot2D.boxes <- function(img.tens, box.mat, pl=T){
+plot2D.boxes <- function(img.tens, box.mat, box.thick, box_intens, pl=T){
   #Call the relevant libraries
   library(StatsChitran)
   #Error Handling###################
@@ -20,9 +20,11 @@ plot2D.boxes <- function(img.tens, box.mat, pl=T){
   storage.mode(m) <- 'integer'
   storage.mode(n) <- 'integer'
   storage.mode(n.boxes) <- 'integer'
+  storage.mode(box.thick) <- 'double'
+  storage.mode(box_intens) <- 'double'
 
   #Call the function
-  fortran.res <- .C('plot_boxes_c', img_tens = img.tens, m = m, n = n, box_mat = box.mat, n_boxes = n.boxes, res_tens = res.tens)
+  fortran.res <- .C('plot_boxes_c', img_tens = img.tens, m = m, n = n, box_mat = box.mat, n_boxes = n.boxes, res_tens = res.tens, box_thick = box.thick, box_if = box_intens)
   #Return the result
   if(pl){
     plot2D.arr(fortran.res$res_tens)

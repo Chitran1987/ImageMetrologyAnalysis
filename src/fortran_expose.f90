@@ -109,11 +109,12 @@ subroutine fft_2D_map_c(img_tens, m, n, res_tens, Xspan, Yspan, k1st, n_spots, k
   res_tens = fft_2D_map(img_tens = img_tens, Xspan=Xspan, Yspan=Yspan, k1st=k1st, k0=k0)
 end subroutine fft_2D_map_c
 
-subroutine plot_boxes_c(img_tens, m, n, box_mat, n_boxes, res_tens) bind(C, name='plot_boxes_c')
+subroutine plot_boxes_c(img_tens, m, n, box_mat, n_boxes, res_tens, box_thick, box_if) bind(C, name='plot_boxes_c')
   integer :: m, n !Floor dimensions of matrix
   integer :: n_boxes !No of boxes to be drawn
   real(real64) :: img_tens(m, n, 3), box_mat(n_boxes, 4), res_tens(m, n, 3)
-  res_tens = plot_boxes(img_tens, box_mat)
+  real(real64) :: box_thick, box_if !Box thickness and box intensity factor
+  res_tens = plot_boxes(img_tens, box_mat, box_thick, box_if)
 end subroutine plot_boxes_c
 
 end module fortran_expose
