@@ -11,7 +11,7 @@ sigmoid.2D.plat <- function(X, Y, k, x.left, x.right, y.left, y.right, pl = T){
   ###Declare m, n and Z#############################
   m <- length(X)
   n <- length(Y)
-  Z <- array(data = 0, dim = c(m, n, 3))
+  Z <- matrix(data = rep(0, n*m), nrow = n)
 
   ###Declare storage modes##########################
   ###X, m, Y, n, Z, k, x_left, y_left, x_right, y_right
