@@ -1,7 +1,7 @@
 #' The simplified sigmoid function
 #'
 #' @description The sigmoid function in one dimension
-#' @usage sigmoid <- function(X, k, cutoff)
+#' @usage sigmoid(X, k, cutoff)
 #'
 #' @param X The numeric vector which contains the \eqn{x} values against which the sigmoid vector is needed
 #'

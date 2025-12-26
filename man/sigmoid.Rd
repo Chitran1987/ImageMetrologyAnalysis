@@ -4,7 +4,7 @@
 \alias{sigmoid}
 \title{The simplified sigmoid function}
 \usage{
-sigmoid <- function(X, k, cutoff)
+sigmoid(X, k, cutoff)
 }
 \arguments{
 \item{X}{The numeric vector which contains the \eqn{x} values against which the sigmoid vector is needed}
