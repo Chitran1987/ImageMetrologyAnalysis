@@ -27,7 +27,7 @@ sigmoid.2D.plat <- function(X, Y, k, x.left, x.right, y.left, y.right, pl = T){
   storage.mode(y.right) <- 'double'
   fortran.res <- .C('sigmoid_2D_c',X = X, m = m, Y = Y, n = n, Z = Z, k = k, x_left = x.left, y_left = y.left, x_right = x.right, y_right = y.right)
   if(pl){
-    plot2D.mat(X, Y, Z)
+    plot2D.mat(X, Y, fortran.res$Z)
     return(fortran.res$Z)
   }
   return(fortran.res$Z)
