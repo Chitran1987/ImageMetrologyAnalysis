@@ -129,4 +129,12 @@ subroutine sigmoid_plat_c(X, m, Y, k, left_cut, right_cut) bind(C, name = 'sigmo
   Y = sigmoid_plat(x = X, k = k, left_cut = left_cut, right_cut = right_cut)
 end subroutine sigmoid_plat_c
 
+subroutine sigmoid_2D_c(X, m, Y, n, Z, k, x_left, y_left, x_right, y_right) bind(C, name = 'sigmoid_2D_c')
+  integer :: m, n
+  real(real64) :: X(m), Y(n), Z(m, n), k, x_left, y_left, x_right, y_right
+  Z = sigmoid_2D(x = X, y = Y, k = k, x_lo = x_left, x_hi = x_right, y_lo = y_left, y_hi = y_right)
+end subroutine sigmoid_2D_c
+
+
+
 end module fortran_expose
