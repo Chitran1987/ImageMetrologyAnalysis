@@ -117,4 +117,10 @@ subroutine plot_boxes_c(img_tens, m, n, box_mat, n_boxes, res_tens, box_thick, b
   res_tens = plot_boxes(img_tens, box_mat, box_thick, box_if)
 end subroutine plot_boxes_c
 
+subroutine sigmoid_c(X, m, Y, k, cut) bind(C, name='sigmoid_c')
+  integer :: m
+  real(real64) :: X(m), Y(m), k, cut
+  Y = sigmoid(x=X, k=k, cutoff=cut)
+end subroutine sigmoid_c
+
 end module fortran_expose
