@@ -24,7 +24,7 @@ Imports:
     ggplot2,
     stats,
     graphics,
-    StatsChitran
+    StatsChitran,
     roxygen2
 Remotes:
     Chitran1987/StatsChitran

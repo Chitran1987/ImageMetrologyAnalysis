@@ -60,7 +60,7 @@ The order of operations of the function \code{fft_2D_map()} is described below
 }
 }
 \examples{
-\donotrun{
+\dontrun{
 #call the relevant libraries
 library(StatsChitran)
 library(ImageMetrologyAnalysis)

@@ -46,34 +46,42 @@
 #' Chitran Ghosal <ghosal.chitran@gmail.com>
 #'
 #' @examples
+#' \donotrun{
 #' #call the relevant libraries
 #' library(StatsChitran)
 #' library(ImageMetrologyAnalysis)
 #'
-#' #draw the lattice in question
-#' X <- seq(-10, 10, by= 0.05)
-#' Y <- X
-#' latt_sq <- sq.latt(X, Y, R.latt = 1.0, A=1, sig = 0.2)
+#' #Load the dataset and plot it
+#' latt <- latt_reconstr_1axis_lite
+#' plot2D.arr(latt)
+#' f_latt <- fft_2D(tens = latt, pl='amp')
+#' f_latt <- f_latt[[1]]
+#' f_latt_zoom <- plot2D.zoom(f_latt, center = c(0,0), Del_X = 40, Del_Y = 40)
 #'
-#' #build the fourier transform of the lattice in question
-#' f.latt_sq <- fft_2D(latt_sq, sampling.del = 0.1, pl='amp')
-#' #select the amplitude spectrum
-#' f.latt_amp <- f.latt_sq[[1]]
-#' #zoom into the area of interest
-#' f.latt_amp_interest <- plot2D.zoom(f.latt_amp, center = c(0,0), Del_X = 20, Del_Y = 20)
+#' #Mask out the (0,0) spot
+#' #Check the boxes for the masking
+#' box_mat <- c(-1,-1,1,1)
+#' box_mat <- matrix(data = box_mat, ncol = 4)
+#' dmp <- plot2D.boxes(img.tens = f_latt_zoom, box.mat = box_mat, box.thick = mean(diff(f_latt_zoom[1,,2])), box_intens = 0.25)
 #'
 #'
-#' ###Estimate the co-ordinates for the points
-#' plot2D.arr(f.latt_amp_interest)
-#' df <- lin.prof.h(f.latt_amp_interest, h.val = -0.25)
-#' df <- lin.prof.v(f.latt_amp_interest, v.val = 6.5)
+#' #Create the mask
+#' mask_x <- f_latt_zoom[,,2] >= -1 & f_latt_zoom[,,2] <= 1
+#' mask_y <- f_latt_zoom[,,3] >= -1 & f_latt_zoom[,,3] <= 1
+#' mask <- mask_x & mask_y
+#' mask <- !mask
+#' latt_int <- arr.mask(arr = f_latt_zoom, mask = mask)
+#' plot2D.arr(latt_int)
 #'
-#' ###Build the matrix box.mat as b.mat and then check it
-#' b.vec <- c(5.0, -1.5, 8.0, 1.5, -1.5, 4.5, 1.5, 7.5 )
-#' b.mat <- matrix(data = b.vec, byrow = T, ncol = 4)
-#' ###Plot the boxes
-#' dat <- plot2D.boxes(f.latt_amp_interest, b.mat, box.thick = 0.025, box_intens = 0.2)
+#' #Create the k1st matrix before calling the fft_2D() function
+#' box_mat <- c(14,-2,17,2,-17,-2,-14,2)
+#' box_mat <- matrix(data = box_mat, nrow = 2, byrow = T)
+#' dmp <- plot2D.boxes(latt_int, box.mat = box_mat, box.thick = 0.05, box_intens = 0.25)
 #'
+#' #Call the fft_2D_map() function
+#' plot2D.arr(latt)
+#' img.map <- fft_2D_map(img.tens = latt, DelX = 2.0, DelY = 2.0, k1st = box_mat, k0 = c(-1,-1,1,1))
+#' }
 #'
 #' @export
 fft_2D_map <- function(img.tens, DelX, DelY, k1st, k0, pl=T){
