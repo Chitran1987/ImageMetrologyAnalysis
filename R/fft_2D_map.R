@@ -46,7 +46,7 @@
 #' Chitran Ghosal <ghosal.chitran@gmail.com>
 #'
 #' @examples
-#' \donotrun{
+#' \dontrun{
 #' #call the relevant libraries
 #' library(StatsChitran)
 #' library(ImageMetrologyAnalysis)
