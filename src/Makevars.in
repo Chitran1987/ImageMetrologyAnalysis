@@ -2,7 +2,8 @@
 PKG_OBJECTS = linalg_solver.o fortran_utils.o fft_utils.o fortran_expose.o
 
 # --- Compiler flags (Fortran) ---
-PKG_FCFLAGS = $(FCFLAGS) @FFTW_CFLAGS@ -fopenmp -ffree-line-length-none
+PKG_FCFLAGS = $(FCFLAGS) @FFTW_CFLAGS@ -fopenmp -ffree-line-length-none -J. -I.
+
 
 # --- Linker flags ---
 PKG_LIBS = @FFTW_LIBS@ $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS) -fopenmp
