@@ -16,5 +16,4 @@ PKG_LIBS += -L$(GFORTRAN_LIBDIR)
 
 # --- Cleanup (used by R CMD clean / some install phases) ---
 # IMPORTANT: do NOT remove $(SHLIB) here, or the install will later fail to load the package.
-clean:
-	rm -f $(PKG_OBJECTS) *.mod
+
