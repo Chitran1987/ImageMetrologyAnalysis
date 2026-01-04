@@ -2,3 +2,5 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^LICENSE\.md$
+^src/.*\.(o|mod|so)$
+^.*\.(o|mod|so)$
