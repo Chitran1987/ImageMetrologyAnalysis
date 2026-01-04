@@ -2,10 +2,102 @@
 % Please edit documentation in R/fft_2D_map.R
 \name{fft_2D_map}
 \alias{fft_2D_map}
-\title{Call the fft_2D_map() function'}
+\title{Return image tensor after a 2D fft mapping over the input image}
 \usage{
-fft_2D_map(img.tens, DelX, DelY, k1st, k0, pl = T)
+fft_2D_map(img.tens, DelX, DelY, k1st, k0, pl)
+fft_2D_map(img.tens, DelX, DelY, k1st, k0)
+}
+\arguments{
+\item{img.tens}{The tensor describing the lattice over which the mapping needs to be done}
+
+\item{DelX}{The X-width of the box which will be iterated over the image tensor \eqn{\large T_{m,n,p}} or \code{img.tens}
+\itemize{
+\item The function subsets out a box using the \link{sigmoid.2D.plat} function and then uses the \link{fft_2D} function to calculate the fourier transform
+}}
+
+\item{DelY}{The Y-width of the box which will be iterated over the image tensor \eqn{\large T_{m,n,p}} or \code{img.tens}
+\itemize{
+\item The function subsets out a box using the \link{sigmoid.2D.plat} function and then uses the \link{fft_2D} function to calculate the fourier transform
+}}
+
+\item{k1st}{The matrix defining the co-ordinates of the boxes/area in reciprocal/fourier space(k-space) around the fourier spots where the area integration will occur
+\itemize{
+\item The no. of rows of \code{k1st} matrix = no. of boxes needed
+\item The no. of columns of \code{k1st} matrix should be equal to 4
+\item Each row should be of the form \code{c(x_LL, y_LL, x_UR, y_UR)}
+\item Here \code{x_LL, y_LL} signify the lower left corner x and y co-ordinate of the rectangular box respectively
+\item Here \code{x_UR, y_UR} signify the upper right corner x and y co-ordinates of the rectangular box respectively
+}}
+
+\item{k0}{A vector of \code{length(k0) = 4} which designates the integration box co-ordinates around the \eqn{(0,0)} spot
+\itemize{
+\item The vector should be of the form \code{c(x_LL, y_LL, x_UR, y_UR)}
+\item The vector should be like an individual row of input parameter \code{k1st}
+}}
+
+\item{pl}{Plots \code{img.tens} with the boxes drawn on them if set to \code{TRUE}.\cr
+Defaults to \code{TRUE}}
+}
+\value{
+The returned value is always a rank-3 tensor.\cr
+\itemize{
+\item The X and Y slices of the tensor \eqn{\large T_{m, n, p=2}} and \eqn{\large T_{m,n, p=3}} respectively stay the same
+}
 }
 \description{
-Call the fft_2D_map() function'
+The function takes in a rank-3 tensor of the form \eqn{\large T_{m,n,p = 3}} with some periodicity and returns a tensor after mapping over one or multiple fourier spots
+}
+\details{
+The order of operations of the function \code{fft_2D_map()} is described below
+\itemize{
+\item The function selects the first pixel in the image matrix \eqn{\large T_{m,n,p=1}} or \code{img.tens[1,1,1]}
+\item The function subsets a part of \code{img.tens} around that pixel using the \link{sigmoid.2D.plat} function and the arguments \code{DelX}, \code{DelY}
+\item The function then performs a fourier transform on the subset image described in the previous step using the \link{fft_2D} function
+\item The function then integrates over the areas of interest/fourier spots defined by the argument \code{k1st}. Call this value \eqn{\large f_1}
+\item The function then integrates over the area around \eqn{(0,0)} spot defined by the argument \code{k0}. Call this value \eqn{\large f_0}
+\item The function then assigns the value \eqn{\large f_1/f_0} to that pixel of interest
+\item The function then moves on to the next pixel of interest \code{img.tens[2,1,1]} and repeats the operations in the order described
+}
+}
+\examples{
+\donotrun{
+#call the relevant libraries
+library(StatsChitran)
+library(ImageMetrologyAnalysis)
+
+#Load the dataset and plot it
+latt <- latt_reconstr_1axis_lite
+plot2D.arr(latt)
+f_latt <- fft_2D(tens = latt, pl='amp')
+f_latt <- f_latt[[1]]
+f_latt_zoom <- plot2D.zoom(f_latt, center = c(0,0), Del_X = 40, Del_Y = 40)
+
+#Mask out the (0,0) spot
+#Check the boxes for the masking
+box_mat <- c(-1,-1,1,1)
+box_mat <- matrix(data = box_mat, ncol = 4)
+dmp <- plot2D.boxes(img.tens = f_latt_zoom, box.mat = box_mat, box.thick = mean(diff(f_latt_zoom[1,,2])), box_intens = 0.25)
+
+
+#Create the mask
+mask_x <- f_latt_zoom[,,2] >= -1 & f_latt_zoom[,,2] <= 1
+mask_y <- f_latt_zoom[,,3] >= -1 & f_latt_zoom[,,3] <= 1
+mask <- mask_x & mask_y
+mask <- !mask
+latt_int <- arr.mask(arr = f_latt_zoom, mask = mask)
+plot2D.arr(latt_int)
+
+#Create the k1st matrix before calling the fft_2D() function
+box_mat <- c(14,-2,17,2,-17,-2,-14,2)
+box_mat <- matrix(data = box_mat, nrow = 2, byrow = T)
+dmp <- plot2D.boxes(latt_int, box.mat = box_mat, box.thick = 0.05, box_intens = 0.25)
+
+#Call the fft_2D_map() function
+plot2D.arr(latt)
+img.map <- fft_2D_map(img.tens = latt, DelX = 2.0, DelY = 2.0, k1st = box_mat, k0 = c(-1,-1,1,1))
+}
+
+}
+\author{
+Chitran Ghosal \href{mailto:ghosal.chitran@gmail.com}{ghosal.chitran@gmail.com}
 }

@@ -25,6 +25,7 @@ Imports:
     stats,
     graphics,
     StatsChitran
+    roxygen2
 Remotes:
     Chitran1987/StatsChitran
 LinkingTo:
