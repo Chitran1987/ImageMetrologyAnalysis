@@ -137,6 +137,10 @@ subroutine sigmoid_2D_c(X, m, Y, n, Z, k, x_left, y_left, x_right, y_right) bind
   Z = sigmoid_2D(x = XY(:,:,1), y = XY(:,:,2), k = k, x_lo = x_left, x_hi = x_right, y_lo = y_left, y_hi = y_right)
 end subroutine sigmoid_2D_c
 
-
+subroutine mask_box_c(tens, res_tens, m, n, box_vec) bind(C, name = 'mask_box_c')
+  integer :: m, n
+  real(real64) :: tens(m, n, 3), res_tens(m, n, 3), box_vec(4)
+  res_tens = mask_box(tens = tens, box_vec = box_vec)
+end subroutine mask_box_c
 
 end module fortran_expose
