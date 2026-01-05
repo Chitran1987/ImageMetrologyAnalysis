@@ -1,4 +1,4 @@
-mask.arr.box <- function(tens, box.vec){
+mask.arr.box <- function(tens, box.vec, pl = T){
   library(StatsChitran)
   ######### error check ##########################
   ######### error check ##########################
@@ -22,5 +22,11 @@ mask.arr.box <- function(tens, box.vec){
   storage.mode(n) <- 'integer'
   #Call the return list
   ret.list <- .C('mask_box_c', tens = tens, res_tens = res.tens, m=m, n=n, box_vec=box.vec)
-  return(ret.list$res_tens)
+  Z <- ret.list$res_tens
+  if(pl){
+    plot2D.arr(Z)
+    return(Z)
+  }else{
+    return(Z)
+  }
 }
