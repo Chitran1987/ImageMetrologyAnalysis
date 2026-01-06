@@ -1,0 +1,58 @@
+#!/bin/sh
+
+set -e
+
+echo "checking for FFTW3 (Windows/Rtools)..."
+
+# Allow user override via environment (best)
+if [ -n "$FFTW_LIBS" ] || [ -n "$FFTW_CFLAGS" ]; then
+  echo "  using FFTW3 from environment:"
+  echo "    FFTW_LIBS   = ${FFTW_LIBS:-"(not set)"}"
+  echo "    FFTW_CFLAGS = ${FFTW_CFLAGS:-"(not set)"}"
+
+else
+  # Try pkg-config (may exist inside Rtools/MSYS2 shell)
+  if command -v pkg-config >/dev/null 2>&1; then
+    if pkg-config --exists fftw3 ; then
+      FFTW_LIBS=`pkg-config --libs fftw3`
+      FFTW_CFLAGS=`pkg-config --cflags fftw3`
+      echo "  found FFTW3 via pkg-config:"
+      echo "    FFTW_LIBS   = $FFTW_LIBS"
+      echo "    FFTW_CFLAGS = $FFTW_CFLAGS"
+    fi
+  fi
+
+  # If still not found, try common Rtools44 UCRT prefix directly
+  if [ -z "$FFTW_LIBS" ] || [ -z "$FFTW_CFLAGS" ]; then
+    if [ -f /ucrt64/include/fftw3.h ] && { [ -f /ucrt64/lib/libfftw3.dll.a ] || [ -f /ucrt64/lib/libfftw3.a ]; }; then
+      FFTW_CFLAGS="-I/ucrt64/include"
+      FFTW_LIBS="-L/ucrt64/lib -lfftw3"
+      echo "  found FFTW3 in /ucrt64:"
+      echo "    FFTW_LIBS   = $FFTW_LIBS"
+      echo "    FFTW_CFLAGS = $FFTW_CFLAGS"
+    fi
+  fi
+
+  # If still not found -> fail with actionable instructions
+  if [ -z "$FFTW_LIBS" ] || [ -z "$FFTW_CFLAGS" ]; then
+    echo "ERROR: FFTW3 not found on Windows."
+    echo "       You have 3 options:"
+    echo "       1) Set FFTW_CFLAGS and FFTW_LIBS before install, e.g."
+    echo "          FFTW_CFLAGS='-I<path>/include' FFTW_LIBS='-L<path>/lib -lfftw3'"
+    echo "       2) Install FFTW3 inside Rtools44 MSYS2 (UCRT) and retry:"
+    echo "          - Open the 'MSYS2 UCRT64' shell from Rtools44"
+    echo "          - Run: pacman -S mingw-w64-ucrt-x86_64-fftw"
+    echo "       3) Vendor FFTW into the package (best for end users)."
+    exit 1
+  fi
+fi
+
+# Generate Windows Makevars from template
+# src/Makevars.ucrt will be used by Rtools44 (UCRT builds)
+echo "writing src/Makevars.ucrt from src/Makevars.ucrt.in ..."
+sed -e "s|@FFTW_LIBS@|$FFTW_LIBS|g" \
+    -e "s|@FFTW_CFLAGS@|$FFTW_CFLAGS|g" \
+    src/Makevars.ucrt.in > src/Makevars.ucrt
+
+echo "done."
+exit 0

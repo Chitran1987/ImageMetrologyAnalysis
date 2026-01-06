@@ -1,0 +1,21 @@
+# --- Fortran sources to compile ---
+OBJECTS = linalg_solver.o fortran_utils.o fft_utils.o fortran_expose.o
+
+# --- Ensure final shared library link is driven by the Fortran compiler ---
+SHLIB_FCLD = $(FC)
+
+# --- Compiler flags (Fortran) ---
+# FFTW_CFLAGS substituted by configure.win (e.g. -I/ucrt64/include)
+PKG_FCFLAGS = $(FCFLAGS) @FFTW_CFLAGS@ -fopenmp -ffree-line-length-none
+
+# --- Linker flags ---
+# FFTW_LIBS substituted by configure.win (e.g. -L/ucrt64/lib -lfftw3)
+PKG_LIBS = @FFTW_LIBS@ $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS) -fopenmp
+
+# --- Explicit shared-object build rule (ensures DLL is created) ---
+$(SHLIB): $(OBJECTS)
+	$(SHLIB_FCLD) $(SHLIB_LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS) $(PKG_LIBS)
+
+# --- Optional cleanup rule (used by R CMD CLEAN) ---
+clean:
+	rm -f $(OBJECTS) $(SHLIB)
