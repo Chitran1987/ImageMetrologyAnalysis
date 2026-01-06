@@ -1,5 +1,4 @@
 #!/bin/sh
-
 set -e
 
 echo "checking for FFTW3 (Windows/Rtools)..."
@@ -19,6 +18,8 @@ else
       echo "  found FFTW3 via pkg-config:"
       echo "    FFTW_LIBS   = $FFTW_LIBS"
       echo "    FFTW_CFLAGS = $FFTW_CFLAGS"
+    else
+      echo "  pkg-config found, but fftw3 not found by pkg-config."
     fi
   fi
 
@@ -26,7 +27,7 @@ else
   if [ -z "$FFTW_LIBS" ] || [ -z "$FFTW_CFLAGS" ]; then
     if [ -f /ucrt64/include/fftw3.h ] && { [ -f /ucrt64/lib/libfftw3.dll.a ] || [ -f /ucrt64/lib/libfftw3.a ]; }; then
       FFTW_CFLAGS="-I/ucrt64/include"
-      FFTW_LIBS="-L/ucrt64/lib -lfftw3"
+      FFTW_LIBS="-L/ucrt64/lib -lfftw3 -lm"
       echo "  found FFTW3 in /ucrt64:"
       echo "    FFTW_LIBS   = $FFTW_LIBS"
       echo "    FFTW_CFLAGS = $FFTW_CFLAGS"
@@ -36,19 +37,17 @@ else
   # If still not found -> fail with actionable instructions
   if [ -z "$FFTW_LIBS" ] || [ -z "$FFTW_CFLAGS" ]; then
     echo "ERROR: FFTW3 not found on Windows."
-    echo "       You have 3 options:"
+    echo "       You have 2 options:"
     echo "       1) Set FFTW_CFLAGS and FFTW_LIBS before install, e.g."
-    echo "          FFTW_CFLAGS='-I<path>/include' FFTW_LIBS='-L<path>/lib -lfftw3'"
+    echo "          FFTW_CFLAGS='-I<path>/include' FFTW_LIBS='-L<path>/lib -lfftw3 -lm'"
     echo "       2) Install FFTW3 inside Rtools44 MSYS2 (UCRT) and retry:"
     echo "          - Open the 'MSYS2 UCRT64' shell from Rtools44"
     echo "          - Run: pacman -S mingw-w64-ucrt-x86_64-fftw"
-    echo "       3) Vendor FFTW into the package (best for end users)."
     exit 1
   fi
 fi
 
 # Generate Windows Makevars from template
-# src/Makevars.ucrt will be used by Rtools44 (UCRT builds)
 echo "writing src/Makevars.ucrt from src/Makevars.ucrt.in ..."
 sed -e "s|@FFTW_LIBS@|$FFTW_LIBS|g" \
     -e "s|@FFTW_CFLAGS@|$FFTW_CFLAGS|g" \
