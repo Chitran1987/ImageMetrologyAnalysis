@@ -6,7 +6,7 @@ SHLIB_FCLD = $(FC)
 
 # --- Compiler flags (Fortran) ---
 # FFTW_CFLAGS substituted by configure.win (e.g. -I/ucrt64/include)
-PKG_FCFLAGS = $(FCFLAGS) @FFTW_CFLAGS@ -fopenmp -ffree-line-length-none
+PKG_FFLAGS = $(FCFLAGS) @FFTW_CFLAGS@ -fopenmp -ffree-line-length-none
 
 # --- Linker flags ---
 # FFTW_LIBS substituted by configure.win (e.g. -L/ucrt64/lib -lfftw3)
