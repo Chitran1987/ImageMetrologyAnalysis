@@ -143,4 +143,11 @@ subroutine mask_box_c(tens, res_tens, m, n, box_vec) bind(C, name = 'mask_box_c'
   res_tens = mask_box(tens = tens, box_vec = box_vec)
 end subroutine mask_box_c
 
+subroutine window_sigmoid_c(tens, res_tens, m, n, cent, k, Xspan, Yspan) bind(C, name = 'window_sigmoid_c')
+  integer :: m, n
+  real(real64) :: tens(m, n, 3), res_tens(m, n, 3)
+  real(real64) :: cent(2), k, Xspan, Yspan
+  res_tens = window_sigmoid(tens = tens, cent = cent, k = k, Xspan = Xspan, Yspan = Yspan)
+end subroutine window_sigmoid_c
+
 end module fortran_expose
