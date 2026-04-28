@@ -4,3 +4,5 @@
 ^LICENSE\.md$
 ^src/.*\.(o|mod|so)$
 ^.*\.(o|mod|so)$
+^\.positai$
+^\.claude$
