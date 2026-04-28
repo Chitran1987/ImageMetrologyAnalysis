@@ -112,17 +112,18 @@ fft_2D <- function(tens, sampling.del = 0.1, pl = 'none'){
   ret.list <- vector(mode='list', length = 2)
   ret.list[[1]] <- amp.tens
   ret.list[[2]] <- phase.tens
+  names(ret.list) <- c('amp.tens', 'phase.tens')
 
   #Check the plot criterion and return
   if(pl == 'none'){
     return(ret.list)
   }
   if(pl == 'amp'){
-    plot2D.arr(ret.list[[1]])
+    plot2D.arr(ret.list$amp.tens)
     return(ret.list)
   }
   if(pl == 'phase'){
-    plot2D.arr(ret.list[[2]])
+    plot2D.arr(ret.list$phase.tens)
     return(ret.list)
   }
 
