@@ -31,7 +31,7 @@ module procedure lineval_r
 end interface lineval
 contains
 
-!function produces a sequence
+!function produces a sequence with start, end and length
 subroutine seqn(st, en, len, X)
     real(real64), intent(in) :: st, en
     integer, intent(in) :: len
