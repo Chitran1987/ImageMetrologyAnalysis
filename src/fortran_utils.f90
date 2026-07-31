@@ -783,6 +783,17 @@ function latt_arb(X, Y, R1, R2, A, sig, shft) result(tens)
 end function latt_arb
 
 !Define a hexagonal lattice
+!single atomic basis(sb)
+function hex_latt_sb(X, Y, R_latt, A, sig) result(tens)
+    real(real64) :: X(:), Y(:), R_latt, A, sig !Inputs
+    real(real64) :: tens(size(Y), size(X), 3) !Outputs
+    real(real64) :: R1(2), R2(2)
+    !code
+    R1 = [R_latt, 0.0_real64]
+    R2 = [R_latt*cos(pi/3), R_latt*sin(pi/3)]
+    tens = latt_arb(X=X, Y=Y, R1=R1, R2=R2, A=A, sig=sig, shft=[0.0_real64, 0.0_real64])
+    return
+end function hex_latt_sb
 
 !Define a honeycomb lattice
 
