@@ -770,6 +770,18 @@ function mask_box(tens, box_vec) result(res_tens)
     !----------core logic-----------------------------!
     return
 end function mask_box
+
+!Define an arbitrary lattice
+function latt_arb(X, Y, R1, R2, A, sig, shft) result(tens)
+    real(real64) :: X(:), Y(:), R1(2), R2(2), A, sig, shft(2) !Inputs
+    real(real64) :: tens(size(Y), size(X), 3) !Outputs
+    !Internal declarations
+    real(real64), allocatable :: lst(:,:)
+    lst = latt_pnt_lst(X=X, Y=Y, R1=R1, R2=R2, shft=shft)
+    tens = populate_latt(X=X, Y=Y, A=A, sig=sig, list=lst)
+    return
+end function latt_arb
+
 !Define a hexagonal lattice
 
 !Define a honeycomb lattice
