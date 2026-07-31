@@ -5,7 +5,7 @@ implicit none
 public
 private :: rev_cmplx, rev_real, rev_int
 private :: print_mat_bool, print_mat_int, print_mat_real, print_mat_cmplx
-private :: lineval_r
+private :: lineval_r, int_search, latt_R_convert
 
 !Define the constants------------------------------------------------------
 real(real64) :: pi = 4.0_real64*atan(1.0_real64)
