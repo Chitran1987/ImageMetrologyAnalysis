@@ -1,4 +1,4 @@
-rect.latt <- function(X, Y, R.latt, A, sig, pl = T){
+hex.latt <- function(X, Y, R.latt, A, sig, pl = T){
   #X, Y, mx, my, R_latt_x, R_latt_y, A, sig, tens ---------> These are the inputs that the fortran subroutine needs
   #Call the libraries needed
   library(StatsChitran)
