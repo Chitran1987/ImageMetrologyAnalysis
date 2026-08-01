@@ -99,6 +99,13 @@ subroutine rect_latt_sb_c(X, Y, mx, my, R_latt_x, R_latt_y, A, sig, tens) bind(C
   tens = rect_latt_sb(X, Y, R_latt_x, R_latt_y, A, sig)
 end subroutine rect_latt_sb_c
 
+subroutine hex_latt_sb_c(X, Y, R_latt, A, sig, tens, mx, my) bind(C, name = 'hex_latt_sb_c')
+  integer, intent(in) :: mx, my
+  real(real64), intent(in) :: R_latt, A, sig
+  real(real64) :: X(mx), Y(my), tens(my, mx, 3)
+  tens = hex_latt_sb(X, Y, R_latt, A, sig)
+end subroutine hex_latt_sb_c
+
 subroutine fft_2D_map_c(img_tens, m, n, res_tens, Xspan, Yspan, k1st, n_spots, k0) bind(C, name = 'fft_2D_map_c')
   integer :: m, n, n_spots
   real(real64) :: img_tens(m, n, 3)
