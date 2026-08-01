@@ -92,12 +92,12 @@ hex.latt <- function(X, Y, R.latt, A, sig, pl = TRUE) {
     "hex_latt_sb_c",
     X = X,
     Y = Y,
-    mx = m.x,
-    my = m.y,
     R_latt = R.latt,
     A = A,
     sig = sig,
-    tens = tens
+    tens = tens,
+    mx = m.x,
+    my = m.y,
   )
 
   ret.tens <- res.list$tens
