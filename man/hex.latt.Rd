@@ -49,8 +49,8 @@ rm(list = ls())
 library(ImageMetrologyAnalysis)
 library(StatsChitran)
 
-X <- seq(-5, 5, by = 0.01)
-Y <- seq(-3, 3, by = 0.01)
+X <- seq(0, 5, by = 0.01)
+Y <- seq(0, 5, by = 0.01)
 
 hex.tens <- hex.latt(
   X,
