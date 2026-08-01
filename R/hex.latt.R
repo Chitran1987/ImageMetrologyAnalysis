@@ -97,7 +97,7 @@ hex.latt <- function(X, Y, R.latt, A, sig, pl = TRUE) {
     sig = sig,
     tens = tens,
     mx = m.x,
-    my = m.y,
+    my = m.y
   )
 
   ret.tens <- res.list$tens
